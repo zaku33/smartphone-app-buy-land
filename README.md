@@ -1,3 +1,4 @@
+<p align="center"> This app is base on : https://github.com/fariasmateuss/BeTheHero/commits/master <p>
 <p align="center">
   <img src="mobile/src/assets/logo@3x.png" />
 </p>
