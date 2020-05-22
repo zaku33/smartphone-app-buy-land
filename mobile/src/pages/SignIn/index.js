@@ -24,35 +24,14 @@ export default function SignIn() {
   const navigation = useNavigation();
 
   async function handleSignIn(e) {
-    e.preventDefault();
+    // e.preventDefault();
     navigation.navigate("MainScreen");
-    /*  try {
-          const response = await api.post('/sessions',{id:id} );
-          if(response.status == 200 )
-            navigation.navigate('Projects', { projects });
-     } catch (err) {
-      alert(err);
-     } */
-
-    //try{
-    // d527ebb0
-    //const response = await api.post('/sessions',  { id:id });
-    // if(response != null ){
-    //   navigation.navigate('Incidents', { incident });
-    //   history.push('/logon');
-    // }
-    // else
-    //   alert('Invalid Id, try again.')
-    //  }
-    //  catch (err) {
-    //     alert('Login failed, please try again.')
-    //  }
   }
   async function handleSignUp(e) {
     navigation.navigate("SignUp");
   }
   async function handleForgetPassword(e) {
-    navigation.navigate("ForgotPassword");
+    // navigation.navigate("ForgotPassword");
   }
 
   return (
