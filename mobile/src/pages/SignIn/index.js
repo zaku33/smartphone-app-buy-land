@@ -25,7 +25,7 @@ export default function SignIn() {
 
   async function handleSignIn(e) {
     e.preventDefault();
-    navigation.navigate("Projects", { projects });
+    navigation.navigate("MainScreen");
     /*  try {
           const response = await api.post('/sessions',{id:id} );
           if(response.status == 200 )
