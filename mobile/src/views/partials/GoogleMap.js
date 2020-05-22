@@ -57,13 +57,18 @@ class GoogleMap extends React.Component {
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsCompass={true}
-        onMapReady={() => {}}
+        // onMapReady={() => {}}
         // onRegionChangeComplete={(region) => setRegion(region)}
       >
         <Marker
           coordinate={{
             latitude: this.state.region.latitude,
             longitude: this.state.region.longitude,
+          }}
+          draggable
+          title="Home"
+          onDragEnd={(e) => {
+            console.log("dragEnd", e.nativeEvent.coordinate);
           }}
           title="Your Location"
         />
