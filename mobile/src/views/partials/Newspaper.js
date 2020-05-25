@@ -1,70 +1,11 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import Constants from "expo-constants";
+import { SearchBar } from "react-native-elements";
 
-const DATA = [
-  {
-    id: "1",
-    title: "1 Item",
-    author: "Nguyen",
-    content: "Lorem Isum",
-    location: {
-      lat: 0,
-      long: 0,
-    },
-  },
-  {
-    id: "2",
-    title: "2 Item",
-    author: "Hoang",
-    content: "Lorem Isum",
-    location: {
-      lat: 100,
-      long: 100,
-    },
-  },
-  {
-    id: "3",
-    title: "3 Item",
-    author: "Vuong",
-    content: "Lorem Isum",
-    location: {
-      lat: 200,
-      long: 200,
-    },
-  },
-  {
-    id: "4",
-    title: "4 Item",
-    author: "Le",
-    content: "Lorem Isum",
-    location: {
-      lat: 300,
-      long: 300,
-    },
-  },
-  {
-    id: "5",
-    title: "5 Item",
-    author: "Hung",
-    content: "Lorem Isum",
-    location: {
-      lat: 400,
-      long: 400,
-    },
-  },
-  {
-    id: "6",
-    title: "6 Item",
-    author: "Anh",
-    content: "Lorem Isum",
-    location: {
-      lat: 500,
-      long: 500,
-    },
-  },
-];
-function Item({ id, title, author, content ,location }) {
+import Constants from "expo-constants";
+import api from "../../services/api";
+
+function Item({ id, title, author, content, location }) {
   return (
     <View style={styles.item}>
       <Text>
@@ -84,26 +25,9 @@ function Item({ id, title, author, content ,location }) {
         Content : <Text style={styles.content}> {content} </Text>
       </Text>
       <Text>
-        Location : Gửi api tìm vị trí vs lat - long tương ứng Lat : {location.lat} Long : {location.long}
+        Lat : {location.lat} Long : {location.long}
       </Text>
     </View>
-  );
-}
-export default function Newspaper() {
-  return (
-    <FlatList
-      data={DATA}
-      renderItem={({ item }) => (
-        <Item
-          id={item.id}
-          title={item.title}
-          author={item.author}
-          content={item.content}
-          location={item.location}
-        />
-      )}
-      keyExtractor={(item) => item.id}
-    />
   );
 }
 const styles = StyleSheet.create({
@@ -131,3 +55,88 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+class Newspaper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      news: [],
+      refreshing: false,
+      search: "",
+    };
+  }
+  componentDidMount() {
+    this.getNewsFirst();
+  }
+
+  getNewsFirst = async () => {
+    let res = await api.get("getNews");
+    this.setState({
+      news: res.data.news,
+    });
+    this.setState({
+      refreshing: false,
+    });
+  };
+
+  handleRefresh = () => {
+    this.setState(
+      {
+        refreshing: true,
+      },
+      () => {
+        this.getNewsFirst();
+      }
+    );
+  };
+
+  ///////// Đang test
+
+
+
+  searchFilterFunction = (text) => {
+    const newData = this.arrayholder.filter((item) => {
+      const itemData = `${item.name.title.toUpperCase()}   
+      ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+
+      const textData = text.toUpperCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+
+    this.setState({ news: newData });
+  };
+
+  renderHeader = () => {
+    return (
+      <SearchBar
+        placeholder="Type Here..."
+        lightTheme
+        round
+        onChangeText={(text) => this.searchFilterFunction(text)}
+        autoCorrect={false}
+      />
+    );
+  };
+
+  render() {
+    return (
+      <FlatList
+        data={this.state.news}
+        ListHeaderComponent={this.renderHeader}
+        renderItem={({ item }) => (
+          <Item
+            id={item.id}
+            title={item.title}
+            author={item.author}
+            content={item.content}
+            location={item.location}
+          />
+        )}
+        refreshing={this.state.refreshing}
+        onRefresh={this.handleRefresh}
+        keyExtractor={(item) => item.id}
+      />
+    );
+  }
+}
+export default Newspaper;

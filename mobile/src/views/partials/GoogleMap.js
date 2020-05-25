@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import styles from "../css/styles";
 import MapView, { Marker } from "react-native-maps";
-
-const { width, heigth } = Dimensions.get("screen");
+// import {SearchBar} from "react-native-elements";
 class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
