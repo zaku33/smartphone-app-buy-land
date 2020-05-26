@@ -11,6 +11,8 @@ const NewsController = require("./controllers/NewsController.js");
 const routes = express.Router();
 
 routes.get("/getNews", NewsController.getNews);
+routes.get("/searchNews", NewsController.getNewsByQuery);
+
 
 routes.post("/sessions", SessionController.create);
 

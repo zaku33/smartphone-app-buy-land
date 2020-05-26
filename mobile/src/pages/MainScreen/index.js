@@ -8,16 +8,16 @@ export default function MainScreen() {
   const Tab = createMaterialBottomTabNavigator();
   return (
     <Tab.Navigator
-      initialRouteName="Newspaper"
+      initialRouteName="News"
       activeColor="#e91e63"
       labelStyle={{ fontSize: 12 }}
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
-        name="Newspaper"
-        component={routePath.Newspaper.path}
+        name="News"
+        component={routePath.News.path}
         options={{
-          tabBarLabel: "Newspaper",
+          tabBarLabel: "News",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="newspaper" color={color} size={26} />
           ),

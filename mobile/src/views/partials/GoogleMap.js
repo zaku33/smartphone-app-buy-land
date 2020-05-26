@@ -3,6 +3,7 @@ import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import styles from "../css/styles";
 import MapView, { Marker } from "react-native-maps";
 // import {SearchBar} from "react-native-elements";
+
 class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
@@ -28,26 +29,32 @@ class GoogleMap extends React.Component {
       });
     });
   }
-  gotToMyLocation() {
-    console.log("gotToMyLocation is called");
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        console.log("curent location: ", coords);
-        console.log(this.map);
-        if (this.map) {
-          console.log("curent location: ", coords);
-          this.map.animateToRegion({
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-          });
-        }
-      },
-      (error) => alert("Error: Are location services on?"),
-      { enableHighAccuracy: true }
-    );
+
+  // gotToMyLocation() {
+  //   console.log("gotToMyLocation is called");
+  //   navigator.geolocation.getCurrentPosition(
+  //     ({ coords }) => {
+  //       console.log("curent location: ", coords);
+  //       console.log(this.state.region);
+  //       if (this.coords) {
+  //         console.log("curent location: ", coords);
+  //         this.map.animateToRegion({
+  //           latitude: coords.latitude,
+  //           longitude: coords.longitude,
+  //           latitudeDelta: 0.005,
+  //           longitudeDelta: 0.005,
+  //         });
+  //       }
+  //     },
+  //     (error) => alert("Error: Are location services on?"),
+  //     { enableHighAccuracy: true }
+  //   );
+  // }
+
+  receiveLocation() {
+
   }
+
   render() {
     return (
       <MapView
@@ -56,8 +63,6 @@ class GoogleMap extends React.Component {
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsCompass={true}
-        // onMapReady={() => {}}
-        // onRegionChangeComplete={(region) => setRegion(region)}
       >
         <Marker
           coordinate={{
@@ -65,7 +70,6 @@ class GoogleMap extends React.Component {
             longitude: this.state.region.longitude,
           }}
           draggable
-          title="Home"
           onDragEnd={(e) => {
             console.log("dragEnd", e.nativeEvent.coordinate);
           }}
