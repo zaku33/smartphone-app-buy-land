@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, Linking } from "react-native";
 import { ListItem, Divider, Avatar } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+
 import styles from "./css/itemStyles";
 
 export default function Item({
@@ -14,10 +16,21 @@ export default function Item({
   created_at,
   updated_at,
 }) {
+  const navigation = useNavigation();
+
   function handleAddressClick(location) {
     let _lat = location.lat;
     let _long = location.long;
     let _address = location.name;
+
+    navigation.navigate('GoogleMap',{
+      params:{
+        lat: _lat,
+        long: _long,
+        address : _address
+      }
+    })
+
     console.log(_lat, _long, _address);
   }
   function handlePhoneClick(phone) {
@@ -26,7 +39,7 @@ export default function Item({
   return (
     <View>
       <ListItem
-        title={() => {
+        Component={() => {
           return (
             <View
               containerStyle={{
@@ -36,13 +49,12 @@ export default function Item({
               <Avatar
                 size="small"
                 rounded
-                source={{
-                  uri: avatar,
-                }}
+                showAccessory
+                source={{uri: avatar}}
                 onPress={() => console.log(id)}
                 onAccessoryPress={() => console.log("Edit ")}
-                title={author}
-                showAccessory
+                icon={{name: 'user', type: 'font-awesome'}} // use this to setup hidden backgroud avatar to icon
+                // title={author} // use this to setup hidden backgroud avatar to name of author
               />
               <Text style={styles.author}>{author}</Text>
               <Text style={styles.updated_at}>{updated_at}</Text>
