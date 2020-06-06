@@ -19,18 +19,18 @@ export default StyleSheet.create({
     padding: 10,
   },
   containerStyle: {
-    height: "5%",
+    height: "7%",
   },
   leftContainerStyle: {
     position: "absolute",
     top: 10,
-    left: 0,
-    height: "5%",
+    left: 10,
+    // height: "5%",
   },
   rightContainerStyle: {
     position: "absolute",
     top: 10,
-    right: 0,
-    height: "5%",
+    right: 10,
+    // height: "5%",
   },
 });

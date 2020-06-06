@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, Linking } from "react-native";
-import { ListItem, Divider, Avatar } from "react-native-elements";
+import { View, Text, Linking} from "react-native";
+import { ListItem, Divider, Avatar , Image } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
 import styles from "./css/itemStyles";
@@ -12,6 +12,7 @@ export default function Item({
   phone,
   title,
   content,
+  image,
   location,
   created_at,
   updated_at,
@@ -64,7 +65,9 @@ export default function Item({
               </Text>
               <Text>
                 Content : <Text style={styles.content}> {content} </Text>
+                {/* <Image/> */}
               </Text>
+              
               <Divider />
               <Text
                 style={styles.address}
@@ -72,7 +75,7 @@ export default function Item({
                   handleAddressClick(location);
                 }}
               >
-                Address : {location.name}{" "}
+                Address : {location != null ? location.name : ""}
               </Text>
               <Divider />
               <Text
