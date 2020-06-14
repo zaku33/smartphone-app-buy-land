@@ -29,8 +29,6 @@ export default function SignIn() {
       password: pwd,
     };
     let res = await api.post("/login", data);
-
-    console.log(res.data);
     if (res.data.status != 200) {
       return alert(res.data.message);
     }
