@@ -14,7 +14,6 @@ import Item from "../components/Items";
 import api from "../../services/api";
 import styles from "../css/styles";
 
-
 export default class News extends React.Component {
   constructor(props) {
     super(props);
@@ -22,9 +21,8 @@ export default class News extends React.Component {
     this.state = { isLoading: true, search: "", refreshing: false };
     this.arrayholder = [];
     this.timeoutTyping = 0;
-
   }
-  
+
   componentDidMount() {
     this.getNewsFirst();
   }
@@ -56,9 +54,8 @@ export default class News extends React.Component {
     );
   };
   handleCreateNews = () => {
-    useNavigation().navigate('CreateNews');
-  }
-
+    this.props.navigation.navigate("CreateNews");
+  };
 
   SearchFilterFunction = async (text) => {
     this.setState({
@@ -110,19 +107,14 @@ export default class News extends React.Component {
           rightComponent={
             <View>
               <Button
-                icon={
-                  <Icon
-                    name="plus"
-                    type="font-awesome"
-                    color="white"
-                  />
-                }
+                icon={<Icon name="plus" type="font-awesome" color="white" />}
                 onPress={() => this.handleCreateNews()}
               />
             </View>
           }
         ></Header>
         <FlatList
+          contentContainerStyle={{ width: "100%"}}
           data={this.state.dataSource}
           renderItem={({ item }) => (
             <Item
@@ -132,14 +124,15 @@ export default class News extends React.Component {
               phone={item.phone}
               title={item.title}
               content={item.content}
-              image={item.image}
+              price={item.price}
+              img={item.image}
               location={item.location}
               created_at={item.created_at}
               updated_at={item.updated_at}
             />
           )}
           enableEmptySections={true}
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 5 }}
           refreshing={this.state.refreshing}
           onRefresh={this.handleRefresh}
           keyExtractor={(item, index) => index.toString()} // or item.id base on Item's id

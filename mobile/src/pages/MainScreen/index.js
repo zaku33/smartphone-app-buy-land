@@ -23,6 +23,7 @@ export default function MainScreen() {
           ),
         }}
       />
+      {}
       <Tab.Screen
         name="GoogleMap"
         component={routePath.GoogleMap.path}

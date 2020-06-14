@@ -21,17 +21,24 @@ export default StyleSheet.create({
   },
   author: {
     position: "absolute",
-    top: -5,
+    top: 0,
     left: 50,
     textAlign: "left",
     fontSize: 14,
   },
   updated_at: {
     position: "absolute",
-    top: 15,
+    top: 20,
     left: 50,
     textAlign: "left",
     fontSize: 10,
+  },
+  newType:{
+    position: "absolute",
+    top: 0,
+    right: 10,
+    textAlign: "right",
+    fontSize: 14,
   },
   content: {
     fontSize: 16,

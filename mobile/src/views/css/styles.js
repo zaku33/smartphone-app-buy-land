@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import Constants from "expo-constants";
 
 export default StyleSheet.create({
@@ -31,6 +31,5 @@ export default StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    // height: "5%",
   },
 });

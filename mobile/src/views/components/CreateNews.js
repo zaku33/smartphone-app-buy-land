@@ -1,79 +1,147 @@
-import React, { useState, useEffect } from "react";
-import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
 import {
-  StyleSheet,
-  FlatList,
+  Button,
   Image,
+  View,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  Alert,
+  ScrollView,
 } from "react-native";
-// import ImagePicker from "react-native-image-picker";
+import { Input, Icon } from "react-native-elements";
+import { Camera } from "expo-camera";
+import Constants from "expo-constants";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+import * as MediaLibrary from "expo-media-library";
 
 import api from "../../services/api";
-import logoImg from "../../assets/logo2.png";
-import bgImg from "../../assets/heroes2.png";
 
-export default function CreateNews() {
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState({});
-  const [location, setLocation] = useState({});
-  const [content, setContent] = useState("");
-  const [phone, setPhone] = useState("");
+export default class CreateNews extends React.Component {
+  state = {
+    phone: "",
+    title: "",
+    content: "",
+    image: null,
+    location: {},
+  };
 
-  const navigation = useNavigation();
+  componentDidMount() {
+    this.getPermissionAsync();
+  }
 
-  // function handleChoosePhoto() {
-  //   const options = {
-  //     noData: true,
-  //   };
-  //   ImagePicker.launchImageLibrary(options, (response) => {
-  //     if (response.uri) {
-  //       this.setImage({ photo: response });
-  //     }
-  //   });
-  // }
-  return (
-    <View>
-      <View>
-        <Image/>
-      </View>
-      <View>
-        <Text>Create new News</Text>
-      </View>
+  handleBack = () => {
+    this.props.navigation.navigate("News", { screen: "News" });
+  };
 
-      <View>
-        <TextInput
-          placeholder="title"
-          placeholderTextColor="#757575"
-          maxLength={10}
-          onChangeText={(title) => setTitle(title)}
-        />
-      </View>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        {photo && (
-          <Image
-            source={{ uri: photo.uri }}
-            style={{ width: 300, height: 300 }}
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    }
+  };
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+    });
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
+
+  render() {
+    let { image } = this.state;
+
+    return (
+      <View style={{ width: "98%", left: "1%", top: "1%" }}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Icon
+            name="ban"
+            type="font-awesome"
+            color="red"
+            iconStyle={{ paddingLeft: 10 }}
+            onPress={() => this.handleBack()}
           />
-        )}
-        <Button title="Choose Photo" onPress={handleChoosePhoto} />
+
+          <Text style={{ textAlign: "center", fontSize: 20 }}>New Post</Text>
+
+          <Icon
+            name="check"
+            type="font-awesome"
+            color="green"
+            iconStyle={{ paddingRight: 10 }}
+            onPress={() => console.log("Create")}
+          />
+        </View>
+        <ScrollView>
+          <View>
+            <Input
+              label="Title"
+              placeholder="Title"
+              leftIcon={{ type: "font-awesome", name: "header" }}
+              maxLength={255}
+              multiline={true}
+              onChangeText={(text) => this.setState({ title: text })}
+            />
+          </View>
+
+          <View>
+            <Input
+              label="Content"
+              placeholder="Content"
+              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              multiline={true}
+              onChangeText={(text) => this.setState({ content: text })}
+            />
+          </View>
+
+          <View>
+            <Input
+              label="Phone"
+              placeholder="Phone"
+              leftIcon={{ type: "font-awesome", name: "phone" }}
+              multiline={true}
+              keyboardType={"phone-pad"}
+              onChangeText={(text) => this.setState({ phone: text })}
+            />
+          </View>
+
+          <View>
+            <Input
+              label="Price"
+              placeholder="Price"
+              leftIcon={{ type: "font-awesome", name: "money" }}
+              multiline={true}
+              keyboardType={"numeric"}
+              onChangeText={(text) => this.setState({ phone: text })}
+            />
+          </View>
+
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Button title="Choose Photo" onPress={this._pickImage} />
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200 }}
+              />
+            )}
+          </View>
+        </ScrollView>
       </View>
-
-      <TouchableOpacity>
-        <Text>
-          Up News
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity>
-        <Text>
-          Cancel
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  }
 }

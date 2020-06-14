@@ -24,7 +24,16 @@ export default function SignIn() {
   const navigation = useNavigation();
 
   async function handleSignIn(e) {
-    // e.preventDefault();
+    let data = {
+      username: username,
+      password: pwd,
+    };
+    let res = await api.post("/login", data);
+
+    console.log(res.data);
+    if (res.data.status != 200) {
+      return alert(res.data.message);
+    }
     navigation.navigate("MainScreen");
   }
   async function handleSignUp(e) {
@@ -49,7 +58,7 @@ export default function SignIn() {
           placeholder="Username"
           placeholderTextColor="#757575"
           maxLength={10}
-          onChange={(e) => setUsername(e.target.value)}
+          onChangeText={(uname) => setUsername(uname)}
         />
       </View>
       <View style={styles.inputView}>
@@ -59,7 +68,7 @@ export default function SignIn() {
           placeholderTextColor="#757575"
           maxLength={10}
           secureTextEntry={true}
-          onChange={(e) => setPwd(e.target.value)}
+          onChangeText={(pass) => setPwd(pass)}
         />
       </View>
 

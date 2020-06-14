@@ -7,12 +7,13 @@ const ProfileController = require("./controllers/ProfileController");
 const SessionController = require("./controllers/SessionController");
 const ProjectController = require("./controllers/ProjectController.js");
 const NewsController = require("./controllers/NewsController.js");
+const AuthController = require("./controllers/AuthController");
 
 const routes = express.Router();
 
 routes.get("/getNews", NewsController.getNews);
+routes.post("/login", AuthController.userLogin);
 routes.get("/searchNews", NewsController.getNewsByQuery);
-
 
 routes.post("/sessions", SessionController.create);
 

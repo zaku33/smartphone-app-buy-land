@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import styles from "../css/styles";
-import MapView, { Marker } from "react-native-maps";
-// import {SearchBar} from "react-native-elements";
 
+import Constants from "expo-constants";
+import MapView, { Marker } from "react-native-maps";
 class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
@@ -51,9 +51,7 @@ class GoogleMap extends React.Component {
   //   );
   // }
 
-  receiveLocation() {
-
-  }
+  receiveLocation() {}
 
   render() {
     return (
