@@ -52,6 +52,9 @@ export default function Item({
       return <Icon name="fire" type="font-awesome" color="#f50"></Icon>;
     }
   }
+  function converTimeShort(time){
+
+  }
 
   return (
     <View>
@@ -70,7 +73,7 @@ export default function Item({
                 // title={author} // use this to setup hidden backgroud avatar to name of author
               />
               <Text style={styles.author}>{author}</Text>
-              <Text style={styles.updated_at}>{updated_at}</Text>
+              <Text style={styles.updated_at}>{converTimeShort(updated_at)}</Text>
               <View style={styles.newType}>{labelForPrice(price)}</View>
 
               <Text>

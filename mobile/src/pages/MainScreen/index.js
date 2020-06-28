@@ -3,9 +3,9 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import routePath from "../../views/index";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-
 export default function MainScreen() {
   const Tab = createMaterialBottomTabNavigator();
+
   return (
     <Tab.Navigator
       initialRouteName="News"
@@ -23,7 +23,6 @@ export default function MainScreen() {
           ),
         }}
       />
-      {}
       <Tab.Screen
         name="GoogleMap"
         component={routePath.GoogleMap.path}
@@ -45,6 +44,17 @@ export default function MainScreen() {
               color={color}
               size={26}
             />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="SignOut"
+        component={routePath.Logout.path}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="logout" color={color} size={26} />
           ),
         }}
       />

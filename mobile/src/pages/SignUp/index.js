@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -25,40 +25,43 @@ export default function SignUp() {
   const [cpwd, setCpwd] = useState("");
   const navigation = useNavigation();
 
-  async function handleRegister(){
-    console.warn(username,email ,phone , pwd , cpwd);
-    if(!verifyPassword()){
+  async function handleRegister() {
+    if (!verifyPassword()) {
       return;
     }
-    let datas = {
-      username : username,
-      email : email ,
-      phone : phone ,
-      password : pwd,
-      confirmPassword : cpwd
+    let data = {
+      username: username,
+      email: email,
+      phone: phone,
+      password: pwd,
+      confirmPassword: cpwd,
+    };
+    const res = await api.post("/register", data);
+    if (res.status != 200) {
+      alert("Help");
     }
-    const response = await api.post('/register', datas);
-    if(response.status != 200){
-      alert("Help")
-    }
-  };
-  function verifyPassword(){
-    if(pwd == ""){
-      alert("Fill password");
+  }
+  function verifyPassword() {
+    if (username == "") {
+      alert("Input username");
       return false;
     }
-    if(pwd.length < 6 || cpwd.length < 6 ){
+    if (pwd == "") {
+      alert("Input password");
+      return false;
+    }
+    if (pwd.length < 6) {
       alert("Password must be at least 6 characters ");
       return false;
     }
-    if(pwd !== cpwd){
+
+    if (pwd !== cpwd) {
       alert("Password and confirm password not match");
       return false;
     }
     return true;
-   
   }
-  function goToSignIn(){
+  function goToSignIn() {
     navigation.navigate("SignIn");
   }
   return (
@@ -76,7 +79,7 @@ export default function SignUp() {
           placeholder="Name"
           placeholderTextColor="#757575"
           maxLength={10}
-          onChangeText={username => setUsername(username)}
+          onChangeText={(username) => setUsername(username)}
         />
       </View>
       <View style={styles.inputView}>
@@ -84,7 +87,7 @@ export default function SignUp() {
           style={styles.inputText}
           placeholder="Email"
           placeholderTextColor="#757575"
-          onChangeText={email=> setEmail(email)}
+          onChangeText={(email) => setEmail(email)}
         />
       </View>
       <View style={styles.inputView}>
@@ -92,7 +95,7 @@ export default function SignUp() {
           style={styles.inputText}
           placeholder="Phone"
           placeholderTextColor="#757575"
-          onChangeText={phone=> setPhone(phone)}
+          onChangeText={(phone) => setPhone(phone)}
         />
       </View>
       <View style={styles.inputView}>
@@ -103,7 +106,7 @@ export default function SignUp() {
           secureTextEntry={true}
           minLength={6}
           maxLength={12}
-          onChangeText={pwd => setPwd(pwd)}
+          onChangeText={(pwd) => setPwd(pwd)}
         />
       </View>
       <View style={styles.inputView}>
@@ -114,24 +117,16 @@ export default function SignUp() {
           secureTextEntry={true}
           minLength={6}
           maxLength={12}
-          onChangeText={cpwd => setCpwd(cpwd)}
+          onChangeText={(cpwd) => setCpwd(cpwd)}
         />
       </View>
 
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text
-          //onClick={handleLogin}
-          style={styles.loginText}
-          onPress={handleRegister}
-        >
-          Register
-        </Text>
+      <TouchableOpacity style={styles.loginBtn} onPress={handleRegister}>
+        <Text style={styles.loginText}>Register</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
-        <Text style={styles.signupText} onPress={goToSignIn}>
-          Login
-        </Text>
+      <TouchableOpacity onPress={goToSignIn}>
+        <Text style={styles.signupText}>Login</Text>
       </TouchableOpacity>
 
       <View style={styles.imageBG}>

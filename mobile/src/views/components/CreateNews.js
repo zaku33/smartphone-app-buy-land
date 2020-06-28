@@ -31,7 +31,7 @@ export default class CreateNews extends React.Component {
   }
 
   handleBack = () => {
-    this.props.navigation.navigate("News", { screen: "News" });
+    this.props.navigation.navigate("News");
   };
 
   getPermissionAsync = async () => {

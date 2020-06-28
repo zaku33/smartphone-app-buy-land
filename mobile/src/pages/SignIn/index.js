@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Modal,
+  AsyncStorage
 } from "react-native";
 
 import api from "../../services/api";
@@ -20,10 +22,15 @@ import styles from "./styles";
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const navigation = useNavigation();
 
   async function handleSignIn(e) {
+    if (username == "") return alert("Input username");
+    if (pwd == "") return alert("Input password");
+
     let data = {
       username: username,
       password: pwd,
@@ -32,24 +39,34 @@ export default function SignIn() {
     if (res.data.status != 200) {
       return alert(res.data.message);
     }
-    navigation.navigate("MainScreen");
+    setStatusMessage(res.data.message);
+    setIsAuth(true);
+    setTimeout(() => {
+      setIsAuth(false);
+      AsyncStorage.setItem('token',res.data.token);
+      navigation.navigate("MainScreen");
+    }, 500);
   }
-  async function handleSignUp(e) {
+  async function handleSignUp() {
     navigation.navigate("SignUp");
   }
-  async function handleForgetPassword(e) {
-    // navigation.navigate("ForgotPassword");
+  async function handleForgetPassword() {
+    navigation.navigate("ForgotPassword");
   }
 
   return (
     <View style={styles.container}>
+      <Modal animationType={"slide"} transparent={false} visible={isAuth}>
+        <View style={{ alignContent: "center" }}>
+          <Text>{statusMessage}</Text>
+        </View>
+      </Modal>
       <View style={styles.logoTop}>
         <Image source={logoImg} />
       </View>
       <View style={styles.header}>
         <Text style={styles.headerTextBold}>Log In Now</Text>
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
@@ -69,21 +86,14 @@ export default function SignIn() {
           onChangeText={(pass) => setPwd(pass)}
         />
       </View>
-
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText} onPress={handleSignIn}>
-          LOGIN
-        </Text>
+      <TouchableOpacity style={styles.loginBtn} onPress={handleSignIn}>
+        <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={styles.signupText} onPress={handleSignUp}>
-          SIGN UP
-        </Text>
+      <TouchableOpacity onPress={handleSignUp}>
+        <Text style={styles.signupText}>SIGN UP</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={styles.forgot} onPress={handleForgetPassword}>
-          Forgot PWD?
-        </Text>
+      <TouchableOpacity onPress={handleForgetPassword}>
+        <Text style={styles.forgot}>Forgot PWD?</Text>
       </TouchableOpacity>
       <View style={styles.imageBG}>
         <Image source={bgImg} />

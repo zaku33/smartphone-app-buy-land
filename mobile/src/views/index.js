@@ -1,6 +1,8 @@
 import News from "./partials/News";
 import GoogleMap from "./partials/GoogleMap";
 import Profile from "./partials/Profile";
+import Logout from "./partials/Logout";
+
 
 export default {
     News: {
@@ -15,4 +17,8 @@ export default {
     path: Profile,
     childPath: [],
   },
+  Logout: {
+    path: Logout,
+    childPath: [],
+  }
 };
