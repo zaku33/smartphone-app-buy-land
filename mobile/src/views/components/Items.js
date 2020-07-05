@@ -22,7 +22,7 @@ export default function Item({
   updated_at,
 }) {
   const navigation = useNavigation();
-
+  
   function handleAddressClick(location) {
     let _lat = location.lat;
     let _long = location.long;
