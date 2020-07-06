@@ -20,6 +20,7 @@ class NewsPost extends Migration
             $table->string('title', 60);
             $table->longText('content');
             $table->bigInteger('price');
+            $table->json('type_post')->nullable();
             $table->json('image')->nullable(false);
             $table->json('location')->nullable();
             $table->timestamps();

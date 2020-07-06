@@ -6,7 +6,7 @@ import { View, TouchableOpacity, Modal } from "react-native";
 export default function MultiImage({ listImg }) {
   return (
     <View style={{ flexDirection: "row" }}>
-      {/* {listImg.map((img, index) => {
+      {listImg.map((img, index) => {
         return (
           <TouchableOpacity
             onPress={() => {
@@ -25,7 +25,7 @@ export default function MultiImage({ listImg }) {
             />
           </TouchableOpacity>
         );
-      })} */}
+      })}
     </View>
   );
 }

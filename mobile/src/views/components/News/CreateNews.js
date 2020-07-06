@@ -8,18 +8,18 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Input, Icon } from "react-native-elements";
+import { Input, Icon, Header } from "react-native-elements";
 import { Camera } from "expo-camera";
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as MediaLibrary from "expo-media-library";
 
-import api from "../../services/api";
+import api from "../../../services/api";
+import styles from "../../css/styles";
 
 export default class CreateNews extends React.Component {
   state = {
-    phone: "",
     title: "",
     content: "",
     image: null,
@@ -62,31 +62,32 @@ export default class CreateNews extends React.Component {
 
     return (
       <View style={{ width: "98%", left: "1%", top: "1%" }}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Icon
-            name="ban"
-            type="font-awesome"
-            color="red"
-            iconStyle={{ paddingLeft: 10 }}
-            onPress={() => this.handleBack()}
-          />
+        <Header
+          leftContainerStyle={styles.leftCreateNewsBar}
+          rightContainerStyle={styles.rightCreateNewsBar}
+          centerComponent={
+            <Text style={styles.centerFormCreateNews}>New Post</Text>
+          }
+          leftComponent={
+            <Icon
+              name="ban"
+              type="font-awesome"
+              color="red"
+              iconStyle={{ paddingLeft: 10 }}
+              onPress={() => this.handleBack()}
+            />
+          }
+          rightComponent={
+            <Icon
+              name="check"
+              type="font-awesome"
+              color="green"
+              iconStyle={{ paddingRight: 10 }}
+              onPress={() => console.log("Create")}
+            />
+          }
+        ></Header>
 
-          <Text style={{ textAlign: "center", fontSize: 20 }}>New Post</Text>
-
-          <Icon
-            name="check"
-            type="font-awesome"
-            color="green"
-            iconStyle={{ paddingRight: 10 }}
-            onPress={() => console.log("Create")}
-          />
-        </View>
         <ScrollView>
           <View>
             <Input
@@ -111,20 +112,12 @@ export default class CreateNews extends React.Component {
 
           <View>
             <Input
-              label="Phone"
-              placeholder="Phone"
-              leftIcon={{ type: "font-awesome", name: "phone" }}
-              multiline={true}
-              keyboardType={"phone-pad"}
-              onChangeText={(text) => this.setState({ phone: text })}
-            />
-          </View>
-
-          <View>
-            <Input
               label="Price"
               placeholder="Price"
               leftIcon={{ type: "font-awesome", name: "money" }}
+              rightIcon={() => {
+                return <Text>VNĐ</Text>;
+              }}
               multiline={true}
               keyboardType={"numeric"}
               onChangeText={(text) => this.setState({ phone: text })}

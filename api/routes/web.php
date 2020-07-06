@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/getNews','NewsController@getAllNews');
+
 Route::post('/login','AuthController@getLogin');
+
+Route::get('/getNews','NewsController@getAllNews');
+Route::get("/searchNews", 'NewsController@getNewsByQuery');
 
 Route::get('/', function () {
     return view('welcome');

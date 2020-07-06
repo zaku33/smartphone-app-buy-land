@@ -18,7 +18,6 @@ export default function Item({
   price,
   img,
   location,
-  created_at,
   updated_at,
 }) {
   const navigation = useNavigation();

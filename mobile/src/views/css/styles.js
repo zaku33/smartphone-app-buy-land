@@ -10,7 +10,6 @@ export default StyleSheet.create({
     marginTop: Constants.statusBarHeight,
   },
   viewStyle: {
-    justifyContent: "center",
     flex: 1,
     backgroundColor: "white",
     marginTop: Platform.OS == "ios" ? 30 : 0,
@@ -19,17 +18,33 @@ export default StyleSheet.create({
     padding: 10,
   },
   containerStyle: {
-    height: "7%",
+    flex : 0
   },
-  leftContainerStyle: {
+  leftCreateNewsBar: {
     position: "absolute",
-    top: 10,
     left: 10,
-    // height: "5%",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  rightContainerStyle: {
+  rightCreateNewsBar: {
     position: "absolute",
-    top: 10,
     right: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  headerCreateNewBar:{
+    height: "10%",
+  },
+  centerFormCreateNews:{
+    fontSize: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  searchBar: {
+    width: "80%",
+    marginBottom: 30,
+    left: "1%"
+  },
+  
 });

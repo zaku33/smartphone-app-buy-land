@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   Platform,
+  ListView,
 } from "react-native";
 import { SearchBar, Header, Button, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -92,51 +93,67 @@ export default class News extends React.Component {
     }
     return (
       <View style={styles.viewStyle}>
-        <SearchBar
-          containerStyle={{ height: "10%" }}
-          round
-          searchIcon={{ size: 24 }}
-          onChangeText={(text) => this.SearchFilterFunction(text)}
-          onClear={(text) => this.SearchFilterFunction("")}
-          placeholder="Search here..."
-          value={this.state.search}
-        />
         <Header
-          containerStyle={styles.containerStyle}
-          rightContainerStyle={styles.rightContainerStyle}
+          containerStyle={styles.headerCreateNewBar}
+          leftContainerStyle={styles.leftCreateNewsBar}
+          rightContainerStyle={styles.rightCreateNewsBar}
+          centerComponent={
+            <SearchBar
+              round
+              containerStyle={styles.searchBar}
+              searchIcon={{ size: 24 }}
+              onChangeText={(text) => this.SearchFilterFunction(text)}
+              onClear={(text) => this.SearchFilterFunction("")}
+              placeholder="Search here..."
+              value={this.state.search}
+            />
+          }
+          leftComponent={
+            <View>
+              <Button
+                icon={<Icon name="list" type="font-awesome" color="white" />}
+                onPress={() => console.log("Hello")}
+              />
+            </View>
+          }
           rightComponent={
             <View>
               <Button
-                icon={<Icon name="plus" type="font-awesome" color="white" />}
+                icon={<Icon name="plus" type="font-awesome" color="yellow" />}
                 onPress={() => this.handleCreateNews()}
               />
             </View>
           }
-        ></Header>
-        <FlatList
-          contentContainerStyle={{ width: "100%"}}
-          data={this.state.dataSource}
-          renderItem={({ item }) => (
-            <Item
-              id={item.id}
-              avatar={item.avatar}
-              author={item.author}
-              phone={item.phone}
-              title={item.title}
-              content={item.content}
-              price={item.price}
-              img={item.image}
-              location={item.location}
-              created_at={item.created_at}
-              updated_at={item.updated_at}
-            />
-          )}
-          enableEmptySections={true}
-          style={{ marginTop: 5 }}
-          refreshing={this.state.refreshing}
-          onRefresh={this.handleRefresh}
-          keyExtractor={(item, index) => index.toString()} // or item.id base on Item's id
         />
+        {this.state.dataSource.length > 0 ? (
+          <FlatList
+            contentContainerStyle={{ width: "100%" }}
+            data={this.state.dataSource}
+            renderItem={({ item }) => (
+              <Item
+                id={item.id}
+                avatar={item.avatar}
+                author={item.nickname}
+                phone={item.phone}
+                title={item.title}
+                content={item.content}
+                price={item.price}
+                img={item.image}
+                location={item.location}
+                updated_at={item.updated_at}
+              />
+            )}
+            // enableEmptySections={true}
+            style={{ marginTop: 5 }}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
+            keyExtractor={(item, index) => index.toString()} // or item.id base on Item's id
+          />
+        ) : (
+          <View>
+            <Text style={{textAlign:'center'}}>Found nothing!</Text>
+          </View>
+        )}
       </View>
     );
   }

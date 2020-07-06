@@ -19,11 +19,15 @@ class DatabaseSeeder extends Seeder
             'title' => 'test',
             'content' => 'Hello World',
             'price' => 1200000,
-            'image' => json_encode([
+            'type_post' => json_encode((object)[
+                'priority' => 1,
+                'type_msg' => 'HOT'
+            ]),
+            'image' => json_encode((object)[
                 "https://images3.alphacoders.com/982/thumb-1920-982034.jpg",
                 "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==",
             ]),
-            'location' => json_encode(['name' => 'Home','lat' => 0.11,'long' => 0.22]),
+            'location' => json_encode((object)['name' => 'Home','lat' => 0.11,'long' => 0.22]),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
