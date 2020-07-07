@@ -1,11 +1,11 @@
 import React from "react";
 import { Image } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
-import { View, TouchableOpacity, Modal } from "react-native";
+import { View, TouchableOpacity, Modal, ScrollView } from "react-native";
 
 export default function MultiImage({ listImg }) {
   return (
-    <View style={{ flexDirection: "row" }}>
+    <ScrollView horizontal={true}>
       {listImg.map((img, index) => {
         return (
           <TouchableOpacity
@@ -21,11 +21,11 @@ export default function MultiImage({ listImg }) {
             <Image
               source={{ uri: img }}
               key={index}
-              style={{ width: 100, height: 100 }}
+              style={{ width: 100, height: 100, marginRight: 10 }}
             />
           </TouchableOpacity>
         );
       })}
-    </View>
+    </ScrollView>
   );
 }

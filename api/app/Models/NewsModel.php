@@ -36,9 +36,9 @@ class NewsModel extends Model
             'p.nickname',
             'p.phone'
         )->from('news_posts as np')->leftJoin('profiles as p', 'p.id', '=', 'np.author')->
-        where('title', 'like', $text_input)->
-        orWhere('price', 'like', $text_input)->
-        orWhere('content', 'like', $text_input)->
+        where('title', 'like', $text_input."%")->
+        orWhere('price', 'like', $text_input."%")->
+        orWhere('content', 'like', $text_input."%")->
         get()->toArray();
         return $query;
     }

@@ -41,18 +41,18 @@ export default function Item({
     Linking.openURL(`tel:${phone}`);
   }
   function labelForPrice(price) {
-    if (price <= 5000000) {
-      return <Icon name="fire" type="font-awesome" color="#f50"></Icon>;
+    if (price <= 1000000) {
+      return; // <Icon name="wind" type="font-awesome" color="#f50"></Icon>;
     }
-    if (price > 5000000 && price <= 10000000) {
-      return <Icon name="fire" type="font-awesome" color="#f50"></Icon>;
+    if (price > 1000000 && price <= 10000000) {
+      return <Icon name="heart" type="font-awesome" color="#f50"></Icon>;
     }
     if (price > 10000000) {
       return <Icon name="fire" type="font-awesome" color="#f50"></Icon>;
     }
   }
   function converTimeShort(time){
-
+    return time;
   }
 
   return (

@@ -19,10 +19,11 @@ import styles from "./styles";
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [pwd, setPwd] = useState("");
   const [cpwd, setCpwd] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [nickname, setNickname] = useState("");
   const navigation = useNavigation();
 
   async function handleRegister() {
@@ -34,12 +35,10 @@ export default function SignUp() {
       email: email,
       phone: phone,
       password: pwd,
-      confirmPassword: cpwd,
+      nickname: nickname,
     };
     const res = await api.post("/register", data);
-    if (res.status != 200) {
-      alert("Help");
-    }
+    alert(res.data.message);
   }
   function verifyPassword() {
     if (username == "") {
@@ -76,7 +75,7 @@ export default function SignUp() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
-          placeholder="Name"
+          placeholder="Username"
           placeholderTextColor="#757575"
           maxLength={10}
           onChangeText={(username) => setUsername(username)}
@@ -88,6 +87,15 @@ export default function SignUp() {
           placeholder="Email"
           placeholderTextColor="#757575"
           onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Nickname"
+          placeholderTextColor="#757575"
+          maxLength={30}
+          onChangeText={(nickname) => setNickname(nickname)}
         />
       </View>
       <View style={styles.inputView}>

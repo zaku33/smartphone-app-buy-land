@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsModel;
 
-class NewsController extends Controller
+class NewsController extends GeneralController
 {
     public function getAllNews()
     {
@@ -25,7 +25,11 @@ class NewsController extends Controller
 
     public function createNews()
     {
-
+        $title = request('title');
+        $content = request('content');
+        $price = request('price');
+        $author = request('author');
+        $image[] = request('image');
     }
 
     public function updateNews($id)

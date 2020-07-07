@@ -27,7 +27,6 @@ export default class News extends React.Component {
   componentDidMount() {
     this.getNewsFirst();
   }
-
   getNewsFirst = async () => {
     let res = await api.get("getNews");
     this.setState(
@@ -57,8 +56,7 @@ export default class News extends React.Component {
   handleCreateNews = () => {
     this.props.navigation.navigate("CreateNews");
   };
-
-  SearchFilterFunction = async (text) => {
+  searchFilterFunction = async (text) => {
     this.setState({
       search: text,
     });
@@ -102,8 +100,8 @@ export default class News extends React.Component {
               round
               containerStyle={styles.searchBar}
               searchIcon={{ size: 24 }}
-              onChangeText={(text) => this.SearchFilterFunction(text)}
-              onClear={(text) => this.SearchFilterFunction("")}
+              onChangeText={(text) => this.searchFilterFunction(text)}
+              onClear={(text) => this.searchFilterFunction("")}
               placeholder="Search here..."
               value={this.state.search}
             />

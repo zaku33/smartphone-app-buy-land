@@ -11,7 +11,7 @@ import {
   View,
   Alert,
   Modal,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 
 import api from "../../services/api";
@@ -43,7 +43,7 @@ export default function SignIn() {
     setIsAuth(true);
     setTimeout(() => {
       setIsAuth(false);
-      AsyncStorage.setItem('token',res.data.token);
+      AsyncStorage.setItem("token", res.data.token);
       navigation.navigate("MainScreen");
     }, 500);
   }
@@ -57,8 +57,10 @@ export default function SignIn() {
   return (
     <View style={styles.container}>
       <Modal animationType={"slide"} transparent={false} visible={isAuth}>
-        <View style={{ alignContent: "center" }}>
-          <Text>{statusMessage}</Text>
+        <View
+          style={styles.loginSuccess}
+        >
+          <Text style={{fontSize:30}}>{statusMessage}</Text>
         </View>
       </Modal>
       <View style={styles.logoTop}>
