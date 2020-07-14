@@ -1,5 +1,11 @@
 import * as React from "react";
-import {Text,View,FlatList,ActivityIndicator,AsyncStorage} from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+  AsyncStorage,
+} from "react-native";
 import { SearchBar, Header, Button, Icon } from "react-native-elements";
 
 import Item from "../components/Items";
@@ -134,6 +140,7 @@ export default class News extends React.Component {
                 price={item.price}
                 img={item.image}
                 location={item.location}
+                priority_icon ={item.type_post.priority_icon}
                 updated_at={item.updated_at}
               />
             )}

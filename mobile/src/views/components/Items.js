@@ -18,10 +18,11 @@ export default function Item({
   price,
   img,
   location,
+  priority_icon,
   updated_at,
 }) {
   const navigation = useNavigation();
-  
+
   function handleAddressClick(location) {
     let _lat = location.lat;
     let _long = location.long;
@@ -40,18 +41,7 @@ export default function Item({
   function handlePhoneClick(phone) {
     Linking.openURL(`tel:${phone}`);
   }
-  function labelForPrice(price) {
-    if (price <= 1000000) {
-      return; // <Icon name="wind" type="font-awesome" color="#f50"></Icon>;
-    }
-    if (price > 1000000 && price <= 10000000) {
-      return <Icon name="heart" type="font-awesome" color="#f50"></Icon>;
-    }
-    if (price > 10000000) {
-      return <Icon name="fire" type="font-awesome" color="#f50"></Icon>;
-    }
-  }
-  function converTimeShort(time){
+  function converTimeShort(time) {
     return time;
   }
 
@@ -72,8 +62,10 @@ export default function Item({
                 // title={author} // use this to setup hidden backgroud avatar to name of author
               />
               <Text style={styles.author}>{author}</Text>
-              <Text style={styles.updated_at}>{converTimeShort(updated_at)}</Text>
-              <View style={styles.newType}>{labelForPrice(price)}</View>
+              <Text style={styles.updated_at}>
+                {converTimeShort(updated_at)}
+              </Text>
+              <View style={styles.newType}><Icon name={priority_icon} type="font-awesome" color="#f50"></Icon></View>
 
               <Text>
                 Title : <Text style={styles.title}> {title} </Text>

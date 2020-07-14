@@ -24,7 +24,7 @@ Route::post('forgotPass','api\UserController@forgotPass');
 
 
 Route::group(['middleware' => 'auth:api'], function() {
-    Route::post('details', 'api\UserController@details');
+    Route::get('details', 'api\UserController@details');
 
     Route::get('getNews','api\NewsController@getAllNews');
     Route::get('searchNews', 'api\NewsController@getNewsByQuery');

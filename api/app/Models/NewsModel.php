@@ -11,7 +11,7 @@ class NewsModel extends Model
 
     protected $casts = [
         'type_post' => 'json',
-        'image' => 'json',
+        'image' => 'array',
         'location' => 'json',
 
     ];

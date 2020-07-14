@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\NewsModel;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends GeneralController
 {
@@ -25,17 +26,30 @@ class NewsController extends GeneralController
 
     public function createNews()
     {
+        $user_info = Auth::user();
+        
+        $author = $user_info->id;
         $title = request('title');
         $content = request('content');
         $price = request('price');
-        $author = request('author');
-        $image = request('image');
-        conlog($title,$image);
-        dd($title,$image);
+        $type_post = priceToPriority($price);
+        $image = [request('image')];
+        $location = request('location');
+
+        $news_post = new NewsModel();
+        $news_post->author = $author;
+        $news_post->title = $title;
+        $news_post->content = $content;
+        $news_post->price = $price;
+        $news_post->type_post = $type_post;
+        $news_post->image = $image;
+        $news_post->location = $location;
+        $news_post->save();
+
+        return $this->res_SM(200,"Create News success");
     }
 
     public function updateNews()
     {
-        
     }
 }
