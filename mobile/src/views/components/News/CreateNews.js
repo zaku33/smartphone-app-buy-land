@@ -4,36 +4,65 @@ import {
   Image,
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   ScrollView,
+  AsyncStorage,
 } from "react-native";
 import { Input, Icon, Header } from "react-native-elements";
-import { Camera } from "expo-camera";
+
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
-import * as MediaLibrary from "expo-media-library";
 
 import api from "../../../services/api";
 import styles from "../../css/styles";
+import MapView from "react-native-maps";
 
 export default class CreateNews extends React.Component {
   state = {
     title: "",
     content: "",
-    image: null,
-    location: {},
+    image: [],
+    price: 0,
+    location: {
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
   };
-
   componentDidMount() {
+    this.getCurrentPosition();
     this.getPermissionAsync();
   }
+  handleCreate = async () => {
+    let token = await AsyncStorage.getItem("access_token");
+    let { title, content, location, image, price } = this.state;
+    let list_image = [];
+    image.forEach((img) => {
+      // list_image.push(img.substring(img.lastIndexOf("/") + 1));
+      list_image.push(img);
+    });
+    console.log(list_image);
 
+    let news_data = {
+      title: title,
+      content: content,
+      price: price,
+      image: list_image,
+      location: location,
+    };
+
+    let res = await api.post("/api/createNews", news_data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.data.status != 200) {
+      return alert(res.data.message);
+    }
+    alert(res.data.message);
+  };
   handleBack = () => {
     this.props.navigation.navigate("News");
   };
-
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -42,21 +71,35 @@ export default class CreateNews extends React.Component {
       }
     }
   };
-
+  getCurrentPosition = () => {
+    return navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({
+        location: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
+        },
+      });
+    });
+  };
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      base64: true,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
-      allowsMultipleSelection: true,
     });
 
     if (!result.cancelled) {
-      this.setState({ image: result.uri });
+      this.setState({
+        image: [
+          ...this.state.image,
+          result ? `data:image/jpg;base64,${result.base64}` : null,
+        ],
+      });
     }
   };
-
   render() {
     let { image } = this.state;
 
@@ -83,7 +126,7 @@ export default class CreateNews extends React.Component {
               type="font-awesome"
               color="green"
               iconStyle={{ paddingRight: 10 }}
-              onPress={() => console.log("Create")}
+              onPress={() => this.handleCreate()}
             />
           }
         ></Header>
@@ -120,18 +163,38 @@ export default class CreateNews extends React.Component {
               }}
               multiline={true}
               keyboardType={"numeric"}
-              onChangeText={(text) => this.setState({ phone: text })}
+              onChangeText={(text) => this.setState({ price: text })}
             />
           </View>
+          <Button title="Choose Photo" onPress={this._pickImage} />
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {image &&
+              image.map((img, idx) => {
+                return (
+                  <Image
+                    source={{ uri: img }}
+                    style={{ width: 200, height: 200, marginRight: 10 }}
+                    key={idx}
+                  />
+                );
+              })}
+          </ScrollView>
 
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Button title="Choose Photo" onPress={this._pickImage} />
-            {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
-              />
-            )}
+          <View>
+            <MapView
+              style={styles.googleMap}
+              region={this.state.location}
+              showsUserLocation={true}
+              showsMyLocationButton={true}
+              showsCompass={true}
+              onRegionChange={() => {}}
+            />
           </View>
         </ScrollView>
       </View>

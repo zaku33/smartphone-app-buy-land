@@ -21,6 +21,9 @@ export default function SignIn() {
     // }
     navigation.navigate("SignIn");
   }
+  function handleBack() {
+    navigation.navigate("SignIn");
+  }
 
   return (
     <View style={styles.container}>
@@ -40,7 +43,11 @@ export default function SignIn() {
         />
       </View>
       <TouchableOpacity style={styles.loginBtn} onPress={handleSendMail}>
-        <Text style={styles.loginText}>Send password to your email</Text>
+        <Text style={styles.loginText}>Send</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={handleBack}>
+        <Text>Back</Text>
       </TouchableOpacity>
     </View>
   );
