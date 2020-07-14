@@ -29,10 +29,12 @@ class NewsController extends GeneralController
         $content = request('content');
         $price = request('price');
         $author = request('author');
-        $image[] = request('image');
+        $image = request('image');
+        conlog($title,$image);
+        dd($title,$image);
     }
 
-    public function updateNews($id)
+    public function updateNews()
     {
         
     }

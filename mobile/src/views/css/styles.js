@@ -33,7 +33,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   headerCreateNewBar:{
-    height: "10%",
+    display: "flex",
+    flex: -1
   },
   centerFormCreateNews:{
     fontSize: 20,
@@ -43,8 +44,7 @@ export default StyleSheet.create({
   },
   searchBar: {
     width: "80%",
-    marginBottom: 30,
-    left: "1%"
+    marginBottom: 30
   },
   
 });

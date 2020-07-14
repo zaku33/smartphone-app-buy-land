@@ -113,7 +113,7 @@ export default class News extends React.Component {
           rightComponent={
             <View>
               <Button
-                icon={<Icon name="plus" type="font-awesome" color="yellow" />}
+                icon={<Icon name="plus" type="font-awesome" color="white" />}
                 onPress={() => this.handleCreateNews()}
               />
             </View>

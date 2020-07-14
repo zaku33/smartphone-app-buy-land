@@ -20,31 +20,32 @@
 </p>
  
 <p align="center">
-  App to help NGOs built with ReactJS, React Native, Node.js and more. 
+  App to help NGOs built with ReactJS, React Native, Laravel and more. 
 </p>
 
 <img src=".github/bethehero.png" />
 
 <p align="center">
-  BeTheHero is a project that aims to connect people who want to make monetary 
+  Landtrader is a project that aims to connect people who want to make monetary 
   contributions to NGOs (non-governmental organizations) that need help.
 </p>
 
 ## Tech
 
-- Node.js
+- Laravel
 - React
 - React Native
 - Expo
-- SQLite3
+- MySQL
 - Jest
 
 ## Development setup
 
-### Back-End
-- Run `yarn` in the `backend` folder;
-- Run `yarn start` to up the server;
-- Open Insomnia or Postman and import the Insomnia.json workspace file at backend folder.
+### Api
+- Run `composer install` in the `api` folder;
+- Run `php artisan migrate` to migrate data;
+- Run `php artisan passport:install` to install passport auth_client
+- Run `php artisan serve --host {ip_address} --port {port}` to start server , which {ip_address} and {port} will use for axios connect to. 
 
 ### Front-End 
 - Run `yarn` in the `frontend` folder;
