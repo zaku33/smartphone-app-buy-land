@@ -1,15 +1,6 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  Platform,
-  ListView,
-} from "react-native";
+import {Text,View,FlatList,ActivityIndicator,AsyncStorage} from "react-native";
 import { SearchBar, Header, Button, Icon } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 
 import Item from "../components/Items";
 import api from "../../services/api";
@@ -18,17 +9,20 @@ import styles from "../css/styles";
 export default class News extends React.Component {
   constructor(props) {
     super(props);
-    //setting default state
     this.state = { isLoading: true, search: "", refreshing: false };
     this.arrayholder = [];
     this.timeoutTyping = 0;
+    this.token = AsyncStorage.getItem("access_token");
   }
 
   componentDidMount() {
     this.getNewsFirst();
   }
   getNewsFirst = async () => {
-    let res = await api.get("getNews");
+    let token = await AsyncStorage.getItem("access_token");
+    let res = await api.get("api/getNews", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     this.setState(
       {
         search: "",
@@ -66,7 +60,9 @@ export default class News extends React.Component {
       if (text === "" || text === null || text === undefined) {
         return this.getNewsFirst();
       }
-      let res = await api.get("searchNews", {
+      let token = await AsyncStorage.getItem("access_token");
+      let res = await api.get("api/searchNews", {
+        headers: { Authorization: `Bearer ${token}` },
         params: {
           textInput: text,
         },
@@ -149,7 +145,7 @@ export default class News extends React.Component {
           />
         ) : (
           <View>
-            <Text style={{textAlign:'center'}}>Found nothing!</Text>
+            <Text style={{ textAlign: "center" }}>Found nothing!</Text>
           </View>
         )}
       </View>

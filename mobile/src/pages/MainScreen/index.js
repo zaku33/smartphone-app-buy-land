@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import routePath from "../../views/index";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -44,17 +44,6 @@ export default function MainScreen() {
               color={color}
               size={26}
             />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="SignOut"
-        component={routePath.Logout.path}
-        options={{
-          tabBarLabel: "Profile",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="logout" color={color} size={26} />
           ),
         }}
       />

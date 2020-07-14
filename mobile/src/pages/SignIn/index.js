@@ -35,7 +35,8 @@ export default function SignIn() {
       username: username,
       password: pwd,
     };
-    let res = await api.post("/login", data);
+    let res = await api.post("api/login", data);
+
     if (res.data.status != 200) {
       return alert(res.data.message);
     }
@@ -43,7 +44,7 @@ export default function SignIn() {
     setIsAuth(true);
     setTimeout(() => {
       setIsAuth(false);
-      AsyncStorage.setItem("token", res.data.token);
+      AsyncStorage.setItem("access_token", res.data.token);
       navigation.navigate("MainScreen");
     }, 500);
   }

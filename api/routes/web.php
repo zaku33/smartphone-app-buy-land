@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login','AuthController@getLogin');
-Route::post("/register", 'ProfileController@createProfile');
+Route::post("/register", 'UserController@createProfile');
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +31,8 @@ Route::group(['middleware'=> 'token'],function($router){
     $router->get("/searchNews", 'NewsController@getNewsByQuery');
 });
 
-Route::get('{profile_id}','ProfileController@detailProfile');
-Route::put('{profile_id}/edit','ProfileController@updateProfile');
+Route::get('{profile_id}','UserController@detailProfile');
+Route::put('{profile_id}/edit','UserController@updateProfile');
 
 
 

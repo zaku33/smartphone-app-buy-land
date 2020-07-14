@@ -6,7 +6,7 @@ use App\Models\NewsModel;
 use App\Models\ProfileModel;
 use Illuminate\Support\Facades\Hash;
 
-class ProfileController extends GeneralController
+class UserController extends GeneralController
 {
     public function createProfile()
     {

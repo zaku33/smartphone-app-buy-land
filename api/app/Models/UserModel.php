@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class ProfileModel extends Model
+class UserModel extends User
 {
     protected $connection = 'mysql';
-    protected $table = 'profiles';
+    protected $table = 'users';
 }

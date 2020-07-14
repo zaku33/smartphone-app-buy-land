@@ -21,10 +21,10 @@ class NewsModel extends Model
     {
         $query = self::select(
             'np.*',
-            'p.avatar',
-            'p.nickname',
-            'p.phone'
-        )->from('news_posts as np')->leftJoin('profiles as p', 'p.id', '=', 'np.author')->get()->toArray();
+            'u.avatar',
+            'u.nickname',
+            'u.phone'
+        )->from('news_posts as np')->leftJoin('users as u', 'u.id', '=', 'np.author')->get()->toArray();
         return $query;
     }
 
@@ -32,10 +32,10 @@ class NewsModel extends Model
     {
         $query = self::select(
             'np.*',
-            'p.avatar',
-            'p.nickname',
-            'p.phone'
-        )->from('news_posts as np')->leftJoin('profiles as p', 'p.id', '=', 'np.author')->
+            'u.avatar',
+            'u.nickname',
+            'u.phone'
+        )->from('news_posts as np')->leftJoin('users as u', 'u.id', '=', 'np.author')->
         where('title', 'like', $text_input."%")->
         orWhere('price', 'like', $text_input."%")->
         orWhere('content', 'like', $text_input."%")->
