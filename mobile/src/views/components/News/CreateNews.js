@@ -42,7 +42,6 @@ export default class CreateNews extends React.Component {
       // list_image.push(img.substring(img.lastIndexOf("/") + 1));
       list_image.push(img);
     });
-    console.log(list_image);
 
     let news_data = {
       title: title,
