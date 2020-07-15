@@ -36,17 +36,18 @@ export default class CreateNews extends React.Component {
   }
   handleCreate = async () => {
     let token = await AsyncStorage.getItem("access_token");
-    let { title, content, location, image, price } = this.state;
+    const { title, content, location, image, price } = this.state;
+
     let list_image = [];
-    image.forEach((path_img) => {
-      let img_name = path_img.substring(path_img.lastIndexOf("/") + 1);
+
+    /* image.forEach((img) => {
+      let img_name = img.substring(img.lastIndexOf("/") + 1);
       let body = new FormData();
-      body.append("my_img", {
-        uri: path_img,
+      body.append("image", {
+        uri: img.replace("file://", ""),
         name: img_name,
-        type: "image/png",
+        type: "image/jpg",
       });
-      body.append("Content-Type", "image/png");
       list_image.push(body);
     });
 
@@ -57,7 +58,6 @@ export default class CreateNews extends React.Component {
       image: list_image,
       location: location,
     };
-
     let res = await api.post("/api/createNews", news_data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ export default class CreateNews extends React.Component {
     if (res.data.status != 200) {
       return alert(res.data.message);
     }
-    alert(res.data.message);
+    alert(res.data.message); */
   };
   handleBack = () => {
     this.props.navigation.navigate("News");

@@ -9,7 +9,7 @@ export default function MultiImage({ listImg }) {
 
   return (
     <ScrollView horizontal={true}>
-      {listImg.map((img, index) => {
+      {listImg && listImg.map((img, index) => {
         var renderImg = () => {
           return (
             <Image

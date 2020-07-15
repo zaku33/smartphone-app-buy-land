@@ -35,19 +35,18 @@ class NewsController extends Controller
             $content = request('content');
             $price = request('price');
             $type_post = priceToPriority($price);
-            $image = request()->file('my_img');
-            // $this->uploadGalery();
+
+            $file = request()->file('image');
+            dd($file);
+
             $location = request('location');
-
-            // print_r(request()->all());
-
             $news_post = new NewsModel();
             $news_post->author = $author;
             $news_post->title = $title;
             $news_post->content = $content;
             $news_post->price = $price;
             $news_post->type_post = $type_post;
-            $news_post->image = $image;
+            // $news_post->image = $image;
             $news_post->location = $location;
             $news_post->save();
 
@@ -61,6 +60,10 @@ class NewsController extends Controller
     {
     }
 
+    public function uploadImg($img)
+    {
+
+    }
 
     private function uploadGalery()
     {

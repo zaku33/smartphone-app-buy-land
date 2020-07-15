@@ -6,8 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import MultiImage from "./MultiImage";
 
 import styles from "./css/itemStyles";
-import { formatNumber, convertToMoney } from "../helper/convertMoney";
-
+import { formatNumber, convertToMoney } from "../../helper/convertMoney";
 export default function Item({
   id,
   avatar,
@@ -65,7 +64,13 @@ export default function Item({
               <Text style={styles.updated_at}>
                 {converTimeShort(updated_at)}
               </Text>
-              <View style={styles.newType}><Icon name={priority_icon} type="font-awesome" color="#f50"></Icon></View>
+              <View style={styles.newType}>
+                <Icon
+                  name={priority_icon}
+                  type="font-awesome"
+                  color="#f50"
+                ></Icon>
+              </View>
 
               <Text>
                 Title : <Text style={styles.title}> {title} </Text>
