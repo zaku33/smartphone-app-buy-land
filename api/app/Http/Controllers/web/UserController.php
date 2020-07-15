@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsModel;
-use App\Models\ProfileModel;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends GeneralController
+class UserController extends Controller
 {
     public function createProfile()
     {
@@ -16,24 +16,24 @@ class UserController extends GeneralController
         $nickname = request('nickname');
         $phone = request('phone');
 
-        $exist_username_or_email = ProfileModel::where('username', $username)->first()->id ?? null;
+        $exist_username_or_email = UserModel::where('username', $username)->first()->id ?? null;
 
         if ($exist_username_or_email != null) {
-            return $this->res_SM(403, 'Username already exists !');
+            return resMes(403, 'Username already exists !');
         }
-        $profile = new ProfileModel();
+        $profile = new UserModel();
         $profile->username = $username;
         $profile->password = Hash::make($password);
         $profile->email = $email;
         $profile->nickname = $nickname;
         $profile->phone = $phone;
         $profile->save();
-        return $this->res_SM(200, 'Registered successful!');
+        return resMes(200, 'Registered successful!');
     }
 
     public function detailProfile($profile_id)
     {
-        $profile = ProfileModel::find($profile_id);
+        $profile = UserModel::find($profile_id);
         return response()->json([
             'status' => 200,
             'data' => $profile

@@ -38,8 +38,7 @@ class DatabaseSeeder extends Seeder
                     "https://th.bing.com/th/id/OIP.w2gHKPj1RKXqliNORu9l2QHaF7?pid=Api&rs=1",
                     "https://images3.alphacoders.com/982/thumb-1920-982034.jpg",
                     "https://th.bing.com/th/id/OIP.w2gHKPj1RKXqliNORu9l2QHaF7?pid=Api&rs=1",
-                    "https://images3.alphacoders.com/982/thumb-1920-982034.jpg",
-                    // "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==",
+                    "https://images3.alphacoders.com/982/thumb-1920-982034.jpg"
                 ]),
                 'location' => json_encode((object)['name' => 'Home', 'lat' => 0.11, 'long' => 0.22]),
                 'created_at' => Carbon::now(),

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsModel;
 
-class NewsController extends GeneralController
+class NewsController extends Controller
 {
     public function getAllNews()
     {

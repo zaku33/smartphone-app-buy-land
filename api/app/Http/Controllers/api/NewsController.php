@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use App\Models\NewsModel;
 use Illuminate\Support\Facades\Auth;
 
-class NewsController extends GeneralController
+class NewsController extends Controller
 {
     public function getAllNews()
     {
@@ -34,10 +35,11 @@ class NewsController extends GeneralController
             $content = request('content');
             $price = request('price');
             $type_post = priceToPriority($price);
-            $image = request('image');
+            $image = request()->file('my_img');
+            // $this->uploadGalery();
             $location = request('location');
 
-            conlog(request('title'));
+            // print_r(request()->all());
 
             $news_post = new NewsModel();
             $news_post->author = $author;
@@ -49,13 +51,29 @@ class NewsController extends GeneralController
             $news_post->location = $location;
             $news_post->save();
 
-            return $this->res_SM(200, "Create News success");
+            return resMes(200, "Create News success");
         } catch (\Throwable $th) {
-            return $this->res_SM(500, $th->getMessage());
+            return resMes(500, $th->getMessage());
         }
     }
 
     public function updateNews()
     {
+    }
+
+
+    private function uploadGalery()
+    {
+        $this->validate(request(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+        ]);
+        if (request()->hasFile('image')) {
+            $image = request()->file('image');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/storage/galeryImages/');
+            $image->move($destinationPath, $name);
+            $this->save();
+            return back()->with('success', 'Image Upload successfully');
+        }
     }
 }

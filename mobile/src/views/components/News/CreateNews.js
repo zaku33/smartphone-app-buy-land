@@ -38,9 +38,16 @@ export default class CreateNews extends React.Component {
     let token = await AsyncStorage.getItem("access_token");
     let { title, content, location, image, price } = this.state;
     let list_image = [];
-    image.forEach((img) => {
-      // list_image.push(img.substring(img.lastIndexOf("/") + 1));
-      list_image.push(img);
+    image.forEach((path_img) => {
+      let img_name = path_img.substring(path_img.lastIndexOf("/") + 1);
+      let body = new FormData();
+      body.append("my_img", {
+        uri: path_img,
+        name: img_name,
+        type: "image/png",
+      });
+      body.append("Content-Type", "image/png");
+      list_image.push(body);
     });
 
     let news_data = {
@@ -52,7 +59,10 @@ export default class CreateNews extends React.Component {
     };
 
     let res = await api.post("/api/createNews", news_data, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data;application/json",
+      },
     });
     if (res.data.status != 200) {
       return alert(res.data.message);
@@ -84,18 +94,14 @@ export default class CreateNews extends React.Component {
   };
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      base64: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
     });
 
     if (!result.cancelled) {
       this.setState({
-        image: [
-          ...this.state.image,
-          result ? `data:image/jpg;base64,${result.base64}` : null,
-        ],
+        image: [...this.state.image, result.uri],
       });
     }
   };
