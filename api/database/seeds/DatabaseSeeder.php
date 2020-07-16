@@ -42,8 +42,8 @@ class DatabaseSeeder extends Seeder
                 ]),
                 'location' => json_encode((object)[
                     'name' => 'Home',
-                    'latitude' => 0.11,
-                    'longitude' => 0.22,
+                    'latitude' => 0,
+                    'longitude' => 0,
                     'latitudeDelta' => 0.001,
                     'longitudeDelta' => 0.001
                 ]),

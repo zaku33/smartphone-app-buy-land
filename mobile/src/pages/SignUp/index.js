@@ -27,17 +27,24 @@ export default function SignUp() {
   const navigation = useNavigation();
 
   async function handleRegister() {
+    let list_error = "";
     if (!verifyPassword()) {
       return;
     }
     let data = {
       username: username,
+      nickname: nickname,
+      password: pwd,
       email: email,
       phone: phone,
-      password: pwd,
-      nickname: nickname,
     };
-    const res = await api.post("/register", data);
+    const res = await api.post("api/register", data);
+    if (res.data.status != 200) {
+      for (const [key, value] of Object.entries(res.data.error)) {
+        list_error += `${key}: ${value} \n`;
+      }
+      return alert(list_error);
+    }
     alert(res.data.message);
   }
   function verifyPassword() {

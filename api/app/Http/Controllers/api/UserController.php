@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassMail;
 use App\Models\UserModel;
-use App\User;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -20,7 +20,7 @@ class UserController extends Controller
             ]
         )) {
             $user = Auth::user();
-            $success['message'] = "Login Success!";
+            $success['message'] = __('api.login_ok');
             $success['status'] = 200;
             $success['token'] = $user->createToken('MyApp')->accessToken;
 
@@ -28,9 +28,9 @@ class UserController extends Controller
         } else {
             return response()->json(
                 [
-                    'error' => 'Unauthorised'
-                ],
-                401
+                    'status' => 401,
+                    'error' => __('api.wrong_user_or_pass')
+                ]
             );
         }
     }
@@ -42,7 +42,7 @@ class UserController extends Controller
             [
                 'username' => 'required|unique:users,username',
                 'password' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'nickname' => 'required',
                 'phone' => 'required'
             ]
@@ -51,9 +51,9 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(
                 [
+                    'status' => 401,
                     'error' => $validator->errors()
-                ],
-                401
+                ]
             );
         }
 
@@ -64,14 +64,32 @@ class UserController extends Controller
         $user->nickname = request('nickname');
         $user->phone = request('phone');
         $user->save();
-        return response()->json([
-            'message' => 'Register Successful!'
-        ], 200);
+        return resMes(__('api.register_ok'));
     }
 
     public function details()
     {
         $user = Auth::user();
         return resMes("", 200, $user);
+    }
+
+    public function forgotPass()
+    {
+        $email = request('email');
+
+        $find_user = UserModel::where('email',$email)->first();
+
+        if(!$find_user){
+            return resMes("The user with this email doesn't exist!",404);
+        }
+
+        $objData = new \stdClass();
+        $objData->demo_one = 'Demo One Value';
+        $objData->demo_two = 'Demo Two Value';
+        $objData->sender = env('MAIL_NAME','LandAdmin');
+        $objData->receiver = $find_user->username;
+ 
+        Mail::to($email)->send(new ResetPassMail($objData));
+        return resMes("Send to email success! Check your email to reset password");
     }
 }

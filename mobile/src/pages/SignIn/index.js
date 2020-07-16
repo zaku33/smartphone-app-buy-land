@@ -36,9 +36,8 @@ export default function SignIn() {
       password: pwd,
     };
     let res = await api.post("api/login", data);
-
     if (res.data.status != 200) {
-      return alert(res.data.message);
+      return alert(res.data.error);
     }
     setStatusMessage(res.data.message);
     setIsAuth(true);
@@ -58,10 +57,8 @@ export default function SignIn() {
   return (
     <View style={styles.container}>
       <Modal animationType={"slide"} transparent={false} visible={isAuth}>
-        <View
-          style={styles.loginSuccess}
-        >
-          <Text style={{fontSize:30}}>{statusMessage}</Text>
+        <View style={styles.loginSuccess}>
+          <Text style={{ fontSize: 30 }}>{statusMessage}</Text>
         </View>
       </Modal>
       <View style={styles.logoTop}>

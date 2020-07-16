@@ -19,7 +19,7 @@ class Users extends Migration
             $table->string('password', 60);
             $table->string('nickname');
             $table->string('phone')->nullable(false);
-            $table->string('email')->nullable(false);
+            $table->string('email')->nullable(false)->unique();
             $table->string('avatar')->nullable();
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
