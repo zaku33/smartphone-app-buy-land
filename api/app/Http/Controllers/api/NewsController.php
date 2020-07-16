@@ -44,7 +44,7 @@ class NewsController extends Controller
             $news_post->location = $location;
             $news_post->save();
 
-            return resMes("Create News success");
+            return resMes(__('api.news.create_ok'));
         } catch (\Throwable $th) {
             return resMes($th->getMessage(), 500);
         }
@@ -52,5 +52,10 @@ class NewsController extends Controller
 
     public function updateNews()
     {
+        try {
+            return resMes(__('api.news.update_ok'));
+        } catch (\Throwable $th) {
+            return resMes($th->getMessage(), 500);
+        }
     }
 }

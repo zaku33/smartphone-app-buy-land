@@ -40,7 +40,13 @@ class DatabaseSeeder extends Seeder
                     "https://th.bing.com/th/id/OIP.w2gHKPj1RKXqliNORu9l2QHaF7?pid=Api&rs=1",
                     "https://images3.alphacoders.com/982/thumb-1920-982034.jpg"
                 ]),
-                'location' => json_encode((object)['name' => 'Home', 'lat' => 0.11, 'long' => 0.22]),
+                'location' => json_encode((object)[
+                    'name' => 'Home',
+                    'latitude' => 0.11,
+                    'longitude' => 0.22,
+                    'latitudeDelta' => 0.001,
+                    'longitudeDelta' => 0.001
+                ]),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);

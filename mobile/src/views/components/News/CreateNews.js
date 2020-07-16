@@ -24,8 +24,10 @@ export default class CreateNews extends React.Component {
     image: [],
     price: 0,
     location: {
-      lat: 0,
-      long: 0,
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
     },
   };
   componentDidMount() {
@@ -82,8 +84,10 @@ export default class CreateNews extends React.Component {
     return navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         location: {
-          lat: position.coords.latitude,
-          long: position.coords.longitude,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
         },
       });
     });
