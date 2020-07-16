@@ -11,11 +11,6 @@ use Validator;
 
 class UserController extends Controller
 {
-    /**
-     * login api
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function login()
     {
         if (Auth::attempt(
@@ -40,11 +35,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Register api
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function register()
     {
         $validator = Validator::make(
@@ -79,18 +69,9 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * details api
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function details()
     {
         $user = Auth::user();
-
-        return response()->json(
-            $user,
-            200
-        );
+        return resMes("", 200, $user);
     }
 }

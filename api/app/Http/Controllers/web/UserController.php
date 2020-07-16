@@ -19,7 +19,7 @@ class UserController extends Controller
         $exist_username_or_email = UserModel::where('username', $username)->first()->id ?? null;
 
         if ($exist_username_or_email != null) {
-            return resMes(403, 'Username already exists !');
+            return resMes('Username already exists !',403);
         }
         $profile = new UserModel();
         $profile->username = $username;
@@ -28,7 +28,7 @@ class UserController extends Controller
         $profile->nickname = $nickname;
         $profile->phone = $phone;
         $profile->save();
-        return resMes(200, 'Registered successful!');
+        return resMes('Registered successful!');
     }
 
     public function detailProfile($profile_id)

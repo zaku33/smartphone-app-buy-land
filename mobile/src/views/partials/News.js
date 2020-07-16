@@ -32,11 +32,11 @@ export default class News extends React.Component {
     this.setState(
       {
         search: "",
-        dataSource: res.data.news,
+        dataSource: res.data.data,
         isLoading: false,
       },
       () => {
-        this.arrayholder = res.data.news;
+        this.arrayholder = res.data.data;
       }
     );
     this.setState({

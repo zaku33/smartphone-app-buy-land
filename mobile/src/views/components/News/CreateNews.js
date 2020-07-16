@@ -24,10 +24,8 @@ export default class CreateNews extends React.Component {
     image: [],
     price: 0,
     location: {
-      latitude: 0,
-      longitude: 0,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
+      lat: 0,
+      long: 0,
     },
   };
   componentDidMount() {
@@ -40,15 +38,15 @@ export default class CreateNews extends React.Component {
 
     let list_image = [];
 
-    /* image.forEach((img) => {
-      let img_name = img.substring(img.lastIndexOf("/") + 1);
-      let body = new FormData();
-      body.append("image", {
-        uri: img.replace("file://", ""),
-        name: img_name,
-        type: "image/jpg",
-      });
-      list_image.push(body);
+    image.forEach((img) => {
+      // let img_name = img.substring(img.lastIndexOf("/") + 1);
+      // let body = new FormData();
+      // body.append("image", {
+      //   uri: img.replace("file://", ""),
+      //   name: img_name,
+      //   type: "image/jpg",
+      // });
+      list_image.push(img);
     });
 
     let news_data = {
@@ -67,7 +65,7 @@ export default class CreateNews extends React.Component {
     if (res.data.status != 200) {
       return alert(res.data.message);
     }
-    alert(res.data.message); */
+    alert(res.data.message);
   };
   handleBack = () => {
     this.props.navigation.navigate("News");
@@ -84,10 +82,8 @@ export default class CreateNews extends React.Component {
     return navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         location: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
         },
       });
     });

@@ -11,18 +11,14 @@ class NewsController extends Controller
     public function getAllNews()
     {
         $all_news = NewsModel::get_relation_with_news();
-        return response()->json([
-            'news' => $all_news
-        ]);
+        return resMes("", 200, $all_news);
     }
 
     public function getNewsByQuery()
     {
         $text_input = request()->query('textInput');
         $news_found = NewsModel::find_news($text_input);
-        return response()->json([
-            'news' => $news_found
-        ]);
+        return resMes("", 200, $news_found);
     }
 
     public function createNews()
@@ -35,48 +31,26 @@ class NewsController extends Controller
             $content = request('content');
             $price = request('price');
             $type_post = priceToPriority($price);
-
-            $file = request()->file('image');
-            dd($file);
-
+            $image = request('image');
             $location = request('location');
+
             $news_post = new NewsModel();
             $news_post->author = $author;
             $news_post->title = $title;
             $news_post->content = $content;
             $news_post->price = $price;
             $news_post->type_post = $type_post;
-            // $news_post->image = $image;
+            $news_post->image = $image;
             $news_post->location = $location;
             $news_post->save();
 
-            return resMes(200, "Create News success");
+            return resMes("Create News success");
         } catch (\Throwable $th) {
-            return resMes(500, $th->getMessage());
+            return resMes($th->getMessage(), 500);
         }
     }
 
     public function updateNews()
     {
-    }
-
-    public function uploadImg($img)
-    {
-
-    }
-
-    private function uploadGalery()
-    {
-        $this->validate(request(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-        ]);
-        if (request()->hasFile('image')) {
-            $image = request()->file('image');
-            $name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/storage/galeryImages/');
-            $image->move($destinationPath, $name);
-            $this->save();
-            return back()->with('success', 'Image Upload successfully');
-        }
     }
 }

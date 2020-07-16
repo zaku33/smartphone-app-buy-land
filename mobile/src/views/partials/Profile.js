@@ -64,14 +64,15 @@ export default class Profile extends React.Component {
   }
   getUserDetail = async () => {
     let token = await AsyncStorage.getItem("access_token");
-    let user_info = await api.get("api/details", {
+    let result_data = await api.get("api/details", {
       headers: { Authorization: `Bearer ${token}` },
     });
+    let user_info = result_data.data.data;
     this.setState({
-      name : user_info.data.nickname,
-      email : user_info.data.email,
-      phone : user_info.data.phone,
-      avatar: user_info.data.avatar
+      name : user_info.nickname,
+      email : user_info.email,
+      phone : user_info.phone,
+      avatar: user_info.avatar
     })
   };
   render() {
