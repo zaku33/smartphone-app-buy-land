@@ -39,11 +39,7 @@ export default function MainScreen() {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="account-box"
-              color={color}
-              size={26}
-            />
+            <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
       />
