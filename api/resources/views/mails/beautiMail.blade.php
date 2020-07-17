@@ -4,8 +4,7 @@ Hello <i>{{ $list_data->receiver }}</i>,
 <p><u>Demo object values:</u></p>
  
 <div>
-<p><b>Demo One:</b>&nbsp;{{ $list_data->demo_one }}</p>
-<p><b>Demo Two:</b>&nbsp;{{ $list_data->demo_two }}</p>
+<p><b>Your new password is :</b>&nbsp;{{ $list_data->new_password }}</p>
 </div>
  
 <p><u>Test:</u></p>

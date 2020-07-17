@@ -77,18 +77,21 @@ class UserController extends Controller
     {
         $email = request('email');
 
-        $find_user = UserModel::where('email',$email)->first();
+        $find_user = UserModel::where('email', $email)->first();
 
-        if(!$find_user){
-            return resMes("The user with this email doesn't exist!",404);
+        if (!$find_user) {
+            return resMes("The user with this email doesn't exist!", 404);
         }
 
+        $new_password = randStr(6);
+        $find_user->password = bcrypt($new_password);
+        $find_user->save();
+
         $objData = new \stdClass();
-        $objData->demo_one = 'Demo One Value';
-        $objData->demo_two = 'Demo Two Value';
-        $objData->sender = env('MAIL_NAME','LandAdmin');
+        $objData->new_password = $new_password;
+        $objData->sender = env('MAIL_NAME', 'LandAdmin');
         $objData->receiver = $find_user->username;
- 
+
         Mail::to($email)->send(new ResetPassMail($objData));
         return resMes("Send to email success! Check your email to reset password");
     }

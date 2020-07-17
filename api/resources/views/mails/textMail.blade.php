@@ -3,8 +3,7 @@ Mail with text only
  
 Demo object values:
  
-Demo One: {{ $list_data->demo_one }}
-Demo Two: {{ $list_data->demo_two }}
+Your new password is: {{ $list_data->new_password }}
  
 Values passed by With method:
  

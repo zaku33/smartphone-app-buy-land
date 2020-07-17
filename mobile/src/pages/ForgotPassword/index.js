@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, Modal } from "react-native";
 
 import api from "../../services/api";
 import styles from "./styles";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
+  const [isSended,setIsSended] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
   const navigation = useNavigation();
   async function handleSendMail() {
     if (email.length < 6) {
@@ -15,11 +18,17 @@ export default function SignIn() {
     let data = {
       email: email,
     };
-    let res = await api.post("forgotPass", data);
-    // if (res.data.status != 200) {
-    //   return alert(res.data.message);
-    // }
-    navigation.navigate("SignIn");
+    let res = await api.post("api/forgotPass", data);
+    if (res.data.status != 200) {
+      return alert(res.data.message);
+    }
+    setStatusMessage(res.data.message);
+    setIsSended(true);
+    setTimeout(() => {
+      setIsSended(false);
+      navigation.navigate("SignIn");
+    }, 1000);
+    
   }
   function handleBack() {
     navigation.navigate("SignIn");
@@ -27,6 +36,12 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
+       <Modal animationType={"slide"} transparent={false} visible={isSended}>
+        <View style={styles.loginSuccess}>
+          <Text style={{ fontSize: 30 }}>{statusMessage}</Text>
+        </View>
+      </Modal>
+
       <View style={styles.header}>
         <Text style={styles.headerTextBold}>
           Get your password through email
