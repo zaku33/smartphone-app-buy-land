@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\ResetPassMail;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -94,5 +95,44 @@ class UserController extends Controller
 
         Mail::to($email)->send(new ResetPassMail($objData));
         return resMes("Send to email success! Check your email to reset password");
+    }
+
+    public function editUser()
+    {
+        $user_info = Auth::user();
+        $user_pass = $user_info['password'];
+        $user_id = Auth::user()['id'];
+        $query = [];
+
+        $input_old_password = request('input_old_password');
+        $input_new_password = request('input_new_password');
+
+        if($input_old_password){
+            if (!Hash::check($input_old_password, $user_pass)) {
+                return resMes("Wrong password!", 404);
+            }
+            if (Hash::check($input_new_password, $user_pass)) {
+                return resMes("Password unchanged!", 404);
+            }
+        }
+        
+        $temp_pass = $input_new_password != null ? ["password" => bcrypt($input_new_password)] : null;
+        $input_avatar = request('input_avatar') != null ? ["avatar" => request('input_avatar')] : null;
+        $input_nickname = request('input_nickname') != null ? ["nickname" => request('input_nickname')] : null;
+        $concat_query = [
+            $temp_pass, $input_avatar, $input_nickname
+        ];
+        foreach ($concat_query as $q) {
+            if ($q != null) {
+                foreach ($q as $key => $val) {
+                    $query[$key] = $val;
+                }
+            }
+        }
+
+        UserModel::find($user_id)->update($query);
+
+       
+        return ResMes("Password changed successfully!");
     }
 }
