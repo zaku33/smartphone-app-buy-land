@@ -135,4 +135,19 @@ class UserController extends Controller
        
         return ResMes("Password changed successfully!");
     }
+
+    public function getOrderUserInfoById()
+    {
+        $req_uid = request("id");
+        $user_info = UserModel::find($req_uid);
+        $data_obj = [
+            'nickname' => $user_info->nickname,
+            'avatar'    => $user_info->avatar
+        ];
+        if($user_info == null)
+        {
+            return resMes("User not found!", 404);
+        }
+        return resMes("User found!", 200,$data_obj);
+    }
 }

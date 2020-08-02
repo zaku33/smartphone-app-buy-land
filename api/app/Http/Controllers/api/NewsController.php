@@ -53,6 +53,28 @@ class NewsController extends Controller
     public function updateNews()
     {
         try {
+            $title_id = request('title_id');
+            $author_id = request('author');
+            $user_info = Auth::user();
+            $user_id = $user_info->id;
+            $old_post = NewsModel::find($title_id);
+
+            $title = request('title');
+            $content = request('content');
+            $price = request('price');
+            $type_post = priceToPriority($price);
+            $image = request('image');
+            $location = request('location');
+
+            if ($user_id == $author_id && $old_post){
+                $old_post->update([
+                    'title' => $title,
+                    'content' => $content,
+                    'price' => $price,
+                    'image' => $image,
+                    'location'=> $location
+                ]);
+            }
             return resMes(__('api.news.update_ok'));
         } catch (\Throwable $th) {
             return resMes($th->getMessage(), 500);
