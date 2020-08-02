@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsModel;
-use App\Models\ProfileModel;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -17,7 +17,7 @@ class AuthController extends Controller
         $username = request()->username;
         $password = request()->password;
 
-        $get_profile = ProfileModel::where('username',$username)->first();
+        $get_profile = UserModel::where('username',$username)->first();
         try {
             if ($get_profile != null && Hash::check($password, $get_profile->password)) {
                 return response()->json([
@@ -38,6 +38,6 @@ class AuthController extends Controller
             ]);
         }
 
-        
+
     }
 }

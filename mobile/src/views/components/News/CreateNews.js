@@ -41,13 +41,6 @@ export default class CreateNews extends React.Component {
     let list_image = [];
 
     image.forEach((img) => {
-      // let img_name = img.substring(img.lastIndexOf("/") + 1);
-      // let body = new FormData();
-      // body.append("image", {
-      //   uri: img.replace("file://", ""),
-      //   name: img_name,
-      //   type: "image/jpg",
-      // });
       list_image.push(img);
     });
 
@@ -61,7 +54,7 @@ export default class CreateNews extends React.Component {
     let res = await api.post("/api/createNews", news_data, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data;application/json",
+        "Content-Type": "application/json",
       },
     });
     if (res.data.status != 200) {
