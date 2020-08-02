@@ -2,62 +2,13 @@ import React, { useState, useEffect } from "react";
 import { View, AsyncStorage } from "react-native";
 import { Avatar, Text, Button, Icon } from "react-native-elements";
 import api from "../../services/api";
-
-/* export default function Profile() {
-  const [name, setName] = useState("Vuong");
-  const [email, setEmail] = useState("nguyenhoangvuong3373@gmail.com");
-  const [phone, setPhone] = useState("0981875373");
-
-  useEffect(() => {});
-
-  getUserDetail = async () => {
-    let token = await AsyncStorage.getItem("access_token");
-    let user_info = await api.get("api/details", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-  };
-
-  return (
-    <View style={{ alignItems: "center" }}>
-      <Avatar
-        size="xlarge"
-        rounded
-        containerStyle={{ top: 30 }}
-        source={{
-          uri:
-            "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
-        }}
-        onPress={() => console.log("Works!")}
-        activeOpacity={0.2}
-      />
-      <View style={{ top: 50 }}>
-        <Text>Name : {name} </Text>
-        <Text>Email : {email} </Text>
-        <Text>Phone : {phone} </Text>
-        <Button
-          icon={
-            <Icon
-              name="sign-out"
-              type="font-awesome"
-              size={20}
-              color="white"
-              style={{ paddingLeft: 10 }}
-            />
-          }
-          iconRight
-          title="Sign out"
-        />
-      </View>
-    </View>
-  );
-} */
-
 export default class Profile extends React.Component {
   state = {
     name: "",
     email: "",
     phone: "",
     avatar: "test.png",
+    canLogout : true,
   };
   componentDidMount() {
     this.getUserDetail();
@@ -75,6 +26,17 @@ export default class Profile extends React.Component {
       avatar: user_info.avatar
     })
   };
+
+  handleLogOut = () =>{
+    AsyncStorage.clear();
+    if(this.state.canLogout){
+      this.setState({canLogout: !this.state.canLogout});
+    }
+    this.state.canLogout ? this.props.navigation.navigate('SignIn') : this.setState({canLogout:true});
+    
+  }
+
+
   render() {
     return (
       <View style={{ alignItems: "center" }}>
@@ -103,6 +65,9 @@ export default class Profile extends React.Component {
                 style={{ paddingLeft: 10 }}
               />
             }
+            onPress={()=>{
+              this.props.navigation.navigate('SignIn');
+            }}
             iconRight
             title="Sign out"
           />

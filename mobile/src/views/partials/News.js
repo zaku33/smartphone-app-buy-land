@@ -76,7 +76,7 @@ export default class News extends React.Component {
       this.setState({
         //setting the filtered newData on datasource
         //After setting the data it will automatically re-render the view
-        dataSource: res.data.news,
+        dataSource: res.data.data,
       });
     }, 1000);
     //#endregion

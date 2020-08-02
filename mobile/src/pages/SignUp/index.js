@@ -109,6 +109,7 @@ export default function SignUp() {
         <TextInput
           style={styles.inputText}
           placeholder="Phone"
+          keyboardType={"numeric"}
           placeholderTextColor="#757575"
           onChangeText={(phone) => setPhone(phone)}
         />
