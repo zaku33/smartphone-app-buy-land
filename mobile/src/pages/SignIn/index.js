@@ -12,6 +12,7 @@ import {
   Alert,
   Modal,
   AsyncStorage,
+  ImageBackground,
 } from "react-native";
 
 import api from "../../services/api";
@@ -55,15 +56,15 @@ export default function SignIn() {
   }
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={{ uri: "https://i.imgur.com/lPPRtQ5.jpg" }}
+      style={styles.container}
+    >
       <Modal animationType={"slide"} transparent={false} visible={isAuth}>
         <View style={styles.loginSuccess}>
           <Text style={{ fontSize: 30 }}>{statusMessage}</Text>
         </View>
       </Modal>
-      <View style={styles.logoTop}>
-        <Image source={logoImg} />
-      </View>
       <View style={styles.header}>
         <Text style={styles.headerTextBold}>Log In Now</Text>
       </View>
@@ -95,9 +96,6 @@ export default function SignIn() {
       <TouchableOpacity onPress={handleForgetPassword}>
         <Text style={styles.forgot}>Forgot PWD?</Text>
       </TouchableOpacity>
-      <View style={styles.imageBG}>
-        <Image source={bgImg} />
-      </View>
-    </View>
+    </ImageBackground>
   );
 }

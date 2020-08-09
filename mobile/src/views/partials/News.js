@@ -19,11 +19,9 @@ export default class News extends React.Component {
     this.arrayholder = [];
     this.timeoutTyping = 0;
     this.token = AsyncStorage.getItem("access_token");
-  }
-
-  componentDidMount() {
     this.getNewsFirst();
   }
+
   getNewsFirst = async () => {
     let token = await AsyncStorage.getItem("access_token");
     let res = await api.get("api/getNews", {
@@ -108,14 +106,14 @@ export default class News extends React.Component {
               value={this.state.search}
             />
           }
-          leftComponent={
-            <View>
-              <Button
-                icon={<Icon name="list" type="font-awesome" color="white" />}
-                onPress={() => console.log("Hello")}
-              />
-            </View>
-          }
+          // leftComponent={
+          //   <View>
+          //     <Button
+          //       icon={<Icon name="list" type="font-awesome" color="white" />}
+          //       onPress={() => console.log("Hello")}
+          //     />
+          //   </View>
+          // }
           rightComponent={
             <View>
               <Button
@@ -136,12 +134,14 @@ export default class News extends React.Component {
                 author={item.nickname}
                 phone={item.phone}
                 title={item.title}
+                address={item.address}
                 content={item.content}
                 price={item.price}
                 img={item.image}
                 location={item.location}
                 priority_icon ={item.type_post.priority_icon}
                 updated_at={item.updated_at}
+                is_editable={item.is_editable}
               />
             )}
             // enableEmptySections={true}

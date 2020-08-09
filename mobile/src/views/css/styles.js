@@ -1,9 +1,13 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 import Constants from "expo-constants";
 
 export default StyleSheet.create({
   googleMap: {
     ...StyleSheet.absoluteFillObject,
+  },
+  mapStyle: {
+    width: Dimensions.get('window').width,
+    height: 250,
   },
   container: {
     flex: 1,

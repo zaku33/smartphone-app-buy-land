@@ -40,8 +40,8 @@ class DatabaseSeeder extends Seeder
                     "https://th.bing.com/th/id/OIP.w2gHKPj1RKXqliNORu9l2QHaF7?pid=Api&rs=1",
                     "https://images3.alphacoders.com/982/thumb-1920-982034.jpg"
                 ]),
+                'address' => 'Home',
                 'location' => json_encode((object)[
-                    'name' => 'Home',
                     'latitude' => 0,
                     'longitude' => 0,
                     'latitudeDelta' => 0.001,
@@ -53,8 +53,8 @@ class DatabaseSeeder extends Seeder
         }
 
         DB::connection()->table('users')->insert([
-            'username' => 'asd',
-            'password' => bcrypt('asdasd'),
+            'username' => 'aaa',
+            'password' => bcrypt('123123'),
             'nickname' => 'Nguyễn Hoàng Vương',
             'phone' => '098185373',
             'email' => 'nguyenhoangvuong44@gmail.com',

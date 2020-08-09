@@ -11,6 +11,7 @@ export default function Item({
   id,
   avatar,
   author,
+  address,
   phone,
   title,
   content,
@@ -19,23 +20,23 @@ export default function Item({
   location,
   priority_icon,
   updated_at,
+  is_editable,
 }) {
   const navigation = useNavigation();
 
   function handleAddressClick(location) {
-    let _lat = location.lat;
-    let _long = location.long;
+    let _lat = location.latitude;
+    let _long = location.longitude;
+    let _latDel = location.latitudeDelta;
+    let _lonDel = location.longitudeDelta;
     let _address = location.name;
 
     navigation.navigate("GoogleMap", {
-      params: {
-        lat: _lat,
-        long: _long,
-        address: _address,
-      },
+      _latitude: _lat,
+      _longitude: _long,
+      _latitudeDelta: _latDel,
+      _longitudeDelta: _lonDel,
     });
-
-    console.log(_lat, _long, _address);
   }
   function handlePhoneClick(phone) {
     Linking.openURL(`tel:${phone}`);
@@ -43,6 +44,11 @@ export default function Item({
   function converTimeShort(time) {
     return time;
   }
+
+  function handleEdit(id){
+    navigation.navigate("UpdateNews", { id: id });
+  }
+
 
   return (
     <View>
@@ -53,18 +59,26 @@ export default function Item({
               <Avatar
                 size="small"
                 rounded
-                showAccessory
-                source={{ uri: avatar }}
-                onPress={() => console.log(id)}
-                onAccessoryPress={() => console.log("Edit ")}
+                // showAccessory
+                source={{ uri: avatar ? avatar : 'https://imgur.com/a/10rme5G?fbclid=IwAR0zFiZpbCFOy0yus7_QrySs8fbkBfH6tRhjwKWBL7Ay9LXnh3HdxQx9wp4' }}
+                // onPress={() => console.log(id)}
+                // onAccessoryPress={() => console.log("Edit ")}
                 icon={{ name: "user", type: "font-awesome" }} // use this to setup hidden backgroud avatar to icon
-                // title={author} // use this to setup hidden backgroud avatar to name of author
+                title={author} // use this to setup hidden backgroud avatar to name of author
               />
               <Text style={styles.author}>{author}</Text>
               <Text style={styles.updated_at}>
                 {converTimeShort(updated_at)}
               </Text>
               <View style={styles.newType}>
+                {is_editable ? (
+                  <Icon
+                    name="pencil"
+                    type="font-awesome"
+                    color="black"
+                    onPress={() => handleEdit(id)}
+                  ></Icon>
+                ) : null}
                 <Icon
                   name={priority_icon}
                   type="font-awesome"
@@ -94,7 +108,7 @@ export default function Item({
                   handleAddressClick(location);
                 }}
               >
-                Address : {location != null ? location.name : ""}
+                Address : {address != null ? address : ""}
               </Text>
               <Divider />
               <Text

@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   AsyncStorage,
+  Alert,
 } from "react-native";
 import { Input, Icon, Header } from "react-native-elements";
 
@@ -15,12 +16,13 @@ import * as Permissions from "expo-permissions";
 
 import api from "../../../services/api";
 import styles from "../../css/styles";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 export default class CreateNews extends React.Component {
   state = {
     title: "",
     content: "",
+    address: "",
     image: [],
     price: 0,
     location: {
@@ -36,19 +38,19 @@ export default class CreateNews extends React.Component {
   }
   handleCreate = async () => {
     let token = await AsyncStorage.getItem("access_token");
-    const { title, content, location, image, price } = this.state;
+    const { title, content, location, image, price, address } = this.state;
 
     let list_image = [];
 
     image.forEach((img) => {
       list_image.push(img);
     });
-
     let news_data = {
       title: title,
       content: content,
       price: price,
       image: list_image,
+      address: address,
       location: location,
     };
     let res = await api.post("/api/createNews", news_data, {
@@ -58,9 +60,24 @@ export default class CreateNews extends React.Component {
       },
     });
     if (res.data.status != 200) {
-      return alert(res.data.message);
+      return Alert.alert(
+        null,
+        res.data.message,
+        [{ text: "OK", onPress: () => {}}],
+        { cancelable: false }
+      );
     }
-    alert(res.data.message);
+
+    return Alert.alert(
+      null,
+      res.data.message,
+      [{ text: "OK", onPress: () => this.props.navigation.navigate("News") }],
+      { cancelable: false }
+    );
+  };
+
+  handleClearImg = async (index) => {
+    // this.list_image
   };
   handleBack = () => {
     this.props.navigation.navigate("News");
@@ -140,6 +157,16 @@ export default class CreateNews extends React.Component {
               onChangeText={(text) => this.setState({ title: text })}
             />
           </View>
+          <View>
+            <Input
+              label="Address"
+              placeholder="Address"
+              leftIcon={{ type: "font-awesome", name: "map-marker" }}
+              maxLength={255}
+              multiline={true}
+              onChangeText={(text) => this.setState({ address: text })}
+            />
+          </View>
 
           <View>
             <Input
@@ -184,16 +211,13 @@ export default class CreateNews extends React.Component {
               })}
           </ScrollView>
 
-          <View>
-            <MapView
-              style={styles.googleMap}
-              region={this.state.location}
-              showsUserLocation={true}
-              showsMyLocationButton={true}
-              showsCompass={true}
-              onRegionChange={() => {}}
-            />
-          </View>
+          {/* <MapView
+            style={styles.mapStyle}
+            region={this.state.location}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            showsCompass={true}
+          /> */}
         </ScrollView>
       </View>
     );

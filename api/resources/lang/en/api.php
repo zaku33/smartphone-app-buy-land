@@ -6,6 +6,7 @@ return [
     'register_ok'               => 'Register success!',
     'unauthorised'              => 'Unauthorised',
     'news.create_ok'            => 'Create News success!',
+    'news.getById_403'          => 'Forbidden',
     'news.create_fail'          => 'Create News fail!',
     'news.update_ok'            => 'Update News success!',
     'news.update_fail'          => 'Update News fail!',

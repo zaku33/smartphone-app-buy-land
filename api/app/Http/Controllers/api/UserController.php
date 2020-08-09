@@ -73,6 +73,18 @@ class UserController extends Controller
         return resMes("", 200, $user);
     }
 
+    public function updateUser(){
+        $nickname = request('nickname');
+        $avatar = request('avatar');
+        $user_id = Auth::user()->id;
+        $found_user = UserModel::find($user_id);
+        if(!$found_user) return resMes("Not Found",404);
+        $found_user->nickname = $nickname;
+        $found_user->avatar = $avatar;
+        $found_user->save();
+        return resMes("Update success", 200);
+    }
+
     public function forgotPass()
     {
         $email = request('email');

@@ -25,9 +25,10 @@ Route::post('forgotPass','api\UserController@forgotPass');
 
 Route::group(['middleware' => 'auth:api'], function() {
     Route::get('details', 'api\UserController@details');
-
+    Route::put('updateUser', 'api\UserController@updateUser');
     Route::get('getNews','api\NewsController@getAllNews');
     Route::get('searchNews', 'api\NewsController@getNewsByQuery');
     Route::post('createNews' , 'api\NewsController@createNews');
+    Route::get('getNewsById' , 'api\NewsController@getNewsById');
     Route::put('updateNews' , 'api\NewsController@updateNews');
 });

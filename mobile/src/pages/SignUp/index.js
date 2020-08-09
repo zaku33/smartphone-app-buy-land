@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  ImageBackground,
 } from "react-native";
 
 import api from "../../services/api";
@@ -71,10 +72,10 @@ export default function SignUp() {
     navigation.navigate("SignIn");
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.logoTop}>
-        <Image source={logoImg} />
-      </View>
+    <ImageBackground
+      source={{ uri: "https://i.imgur.com/lPPRtQ5.jpg" }}
+      style={styles.container}
+    >
       <View style={styles.header}>
         <Text style={styles.headerTextBold}>Register account</Text>
       </View>
@@ -144,10 +145,6 @@ export default function SignUp() {
       <TouchableOpacity onPress={goToSignIn}>
         <Text style={styles.signupText}>Login</Text>
       </TouchableOpacity>
-
-      <View style={styles.imageBG}>
-        <Image source={bgImg} />
-      </View>
-    </View>
+    </ImageBackground>
   );
 }

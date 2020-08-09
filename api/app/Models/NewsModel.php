@@ -15,6 +15,9 @@ class NewsModel extends Model
         'location' => 'json',
 
     ];
+    protected $fillable =[
+        'title'
+    ];
 
 
     public static function get_relation_with_news()

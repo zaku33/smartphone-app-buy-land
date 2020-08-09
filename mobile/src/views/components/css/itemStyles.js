@@ -34,6 +34,8 @@ export default StyleSheet.create({
     fontSize: 10,
   },
   newType:{
+    flex: 1, 
+    flexDirection: 'row',
     position: "absolute",
     top: 0,
     right: 10,

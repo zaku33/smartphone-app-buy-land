@@ -1,80 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import styles from "../css/styles";
-
-import Constants from "expo-constants";
 import MapView, { Marker } from "react-native-maps";
-class GoogleMap extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      region: {
-        latitude: 0,
-        longitude: 0,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001,
-      },
-    };
-  }
-  componentDidMount() {
+
+export default function GoogleMap({route, navigation}) {
+  
+  const [latitude , setLatitude] = useState(0);
+  const [longitude , setLongitude] = useState(0);
+  const [latitudeDelta , setLatitudeDelta] = useState(0);
+  const [longitudeDelta , setLongitudeDelta] = useState(0);
+
+  useEffect(()=>{
     navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        region: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
-        },
-      });
+      setLatitude(route.params ? (route.params._latitude != null ? route.params._latitude : position.coords.latitude) : position.coords.latitude ),
+      setLongitude(route.params ? (route.params._longitude != null ? route.params._longitude : position.coords.longitude) : position.coords.longitude),
+      setLatitudeDelta(route.params ? (route.params._latitudeDelta != null ? route.params._latitudeDelta : 0.001) : 0.001),
+      setLongitudeDelta(route.params ? (route.params._longitudeDelta != null ? route.params._longitudeDelta : 0.001) : 0.001)
     });
-  }
-
-  // gotToMyLocation() {
-  //   console.log("gotToMyLocation is called");
-  //   navigator.geolocation.getCurrentPosition(
-  //     ({ coords }) => {
-  //       console.log("curent location: ", coords);
-  //       console.log(this.state.region);
-  //       if (this.coords) {
-  //         console.log("curent location: ", coords);
-  //         this.map.animateToRegion({
-  //           latitude: coords.latitude,
-  //           longitude: coords.longitude,
-  //           latitudeDelta: 0.005,
-  //           longitudeDelta: 0.005,
-  //         });
-  //       }
-  //     },
-  //     (error) => alert("Error: Are location services on?"),
-  //     { enableHighAccuracy: true }
-  //   );
-  // }
-
-  receiveLocation() {}
-
-  render() {
+  })
     return (
       <MapView
         style={styles.googleMap}
-        region={this.state.region}
+        region={{
+          latitude: latitude,
+          longitude: longitude,
+          latitudeDelta: latitudeDelta,
+          longitudeDelta: longitudeDelta
+        }}
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsCompass={true}
       >
         <Marker
           coordinate={{
-            latitude: this.state.region.latitude,
-            longitude: this.state.region.longitude,
+            latitude: latitude,
+            longitude: longitude,
           }}
           draggable
           onDragEnd={(e) => {
-            console.log("dragEnd", e.nativeEvent.coordinate);
+            // console.log("dragEnd", e.nativeEvent.coordinate);
           }}
           title="Your Location"
         />
       </MapView>
     );
-  }
+  
 }
-export default GoogleMap;
