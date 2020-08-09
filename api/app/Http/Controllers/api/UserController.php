@@ -77,9 +77,17 @@ class UserController extends Controller
     public function updateUser(){
         $nickname = request('nickname');
         $avatar = request('avatar');
+        $oldPass = request('oldPass');
+        $newPass = request('newPass');
         $user_id = Auth::user()->id;
         $found_user = UserModel::find($user_id);
         if(!$found_user) return resMes("Not Found",404);
+        if($oldPass && $newPass){
+            if(!Hash::check($oldPass,$found_user->password)){
+                return resMes("Old password not match!",401);
+            }
+            $found_user->password = bcrypt($newPass);
+        }
         $found_user->nickname = $nickname;
         $found_user->avatar = $avatar;
         $found_user->save();
@@ -107,59 +115,5 @@ class UserController extends Controller
 
         Mail::to($email)->send(new ResetPassMail($objData));
         return resMes("Send to email success! Check your email to reset password");
-    }
-
-    public function editUser()
-    {
-        $user_info = Auth::user();
-        $user_pass = $user_info['password'];
-        $user_id = Auth::user()['id'];
-        $query = [];
-
-        $input_old_password = request('input_old_password');
-        $input_new_password = request('input_new_password');
-
-        if($input_old_password){
-            if (!Hash::check($input_old_password, $user_pass)) {
-                return resMes("Wrong password!", 404);
-            }
-            if (Hash::check($input_new_password, $user_pass)) {
-                return resMes("Password unchanged!", 404);
-            }
-        }
-        
-        $temp_pass = $input_new_password != null ? ["password" => bcrypt($input_new_password)] : null;
-        $input_avatar = request('input_avatar') != null ? ["avatar" => request('input_avatar')] : null;
-        $input_nickname = request('input_nickname') != null ? ["nickname" => request('input_nickname')] : null;
-        $concat_query = [
-            $temp_pass, $input_avatar, $input_nickname
-        ];
-        foreach ($concat_query as $q) {
-            if ($q != null) {
-                foreach ($q as $key => $val) {
-                    $query[$key] = $val;
-                }
-            }
-        }
-
-        UserModel::find($user_id)->update($query);
-
-       
-        return ResMes("Password changed successfully!");
-    }
-
-    public function getOrderUserInfoById()
-    {
-        $req_uid = request("id");
-        $user_info = UserModel::find($req_uid);
-        $data_obj = [
-            'nickname' => $user_info->nickname,
-            'avatar'    => $user_info->avatar
-        ];
-        if($user_info == null)
-        {
-            return resMes("User not found!", 404);
-        }
-        return resMes("User found!", 200,$data_obj);
     }
 }

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, TextInput, TouchableOpacity, View, Modal } from "react-native";
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Modal,
+  ImageBackground,
+} from "react-native";
 
 import api from "../../services/api";
 import styles from "./styles";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
-  const [isSended,setIsSended] = useState(false);
+  const [isSended, setIsSended] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
   const navigation = useNavigation();
@@ -28,15 +35,17 @@ export default function SignIn() {
       setIsSended(false);
       navigation.navigate("SignIn");
     }, 1000);
-    
   }
   function handleBack() {
     navigation.navigate("SignIn");
   }
 
   return (
-    <View style={styles.container}>
-       <Modal animationType={"slide"} transparent={false} visible={isSended}>
+    <ImageBackground
+      source={{ uri: "https://i.imgur.com/lPPRtQ5.jpg" }}
+      style={styles.container}
+    >
+      <Modal animationType={"slide"} transparent={false} visible={isSended}>
         <View style={styles.loginSuccess}>
           <Text style={{ fontSize: 30 }}>{statusMessage}</Text>
         </View>
@@ -64,6 +73,6 @@ export default function SignIn() {
       <TouchableOpacity onPress={handleBack}>
         <Text>Back</Text>
       </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 }

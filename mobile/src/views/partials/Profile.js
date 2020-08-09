@@ -11,6 +11,9 @@ export default class Profile extends React.Component {
     email: "",
     phone: "",
     avatar: "",
+    oldPass: "",
+    newPass: "",
+    conPass: "",
     canLogout: true,
   };
   componentDidMount() {
@@ -31,6 +34,31 @@ export default class Profile extends React.Component {
     });
   };
 
+  verifyPassword() {
+    if(this.state.oldPass == "" ){
+      alert("Invalid old password");
+      return false;
+    }
+    if(this.state.oldPass.length < 6 ){
+      alert("Input old password");
+      return false;
+    }
+    if (this.state.newPass == "") {
+      alert("Input new password");
+      return false;
+    }
+    if (this.state.newPass.length < 6) {
+      alert("Password must be at least 6 characters");
+      return false;
+    }
+
+    if (this.state.oldPass !== this.state.newPass) {
+      alert("New password must be different with old password");
+      return false;
+    }
+    return true;
+  }
+
   handleLogOut = () => {
     AsyncStorage.clear();
     if (this.state.canLogout) {
@@ -41,18 +69,28 @@ export default class Profile extends React.Component {
   handleUpdate = async () => {
     let token = await AsyncStorage.getItem("access_token");
     const {avatar , name} = this.state;
-
-
     let news_data = {
       avatar: avatar,
       nickname: name,
     };
+    if(this.state.oldPass && this.state.newPass){
+      news_data.oldPass = this.state.oldPass;
+      news_data.newPass = this.state.newPass;
+    }
     let res = await api.put("/api/updateUser", news_data, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
+    if(res.data.status !=200){
+      return Alert.alert(
+        null,
+        res.data.message,
+        [{ text: "OK", onPress: () =>{}}],
+        { cancelable: false }
+      );
+    }
     return Alert.alert(
       null,
       res.data.message,
@@ -107,6 +145,22 @@ export default class Profile extends React.Component {
               defaultValue={this.state.name}
               maxLength={255}
               onChangeText={(text) => this.setState({ name: text })}
+            />
+          </View>
+          <View>
+            <Input
+              secureTextEntry={true}
+              label="Old password"
+              onChangeText={(text) => this.setState({ oldPass: text })}
+              maxLength={255}
+            />
+          </View>
+          <View>
+            <Input
+              secureTextEntry={true}
+              label="New password"
+              onChangeText={(text) => this.setState({ newPass: text })}
+              maxLength={255}
             />
           </View>
           <View>
