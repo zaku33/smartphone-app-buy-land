@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Linking } from "react-native";
 import { ListItem, Divider, Avatar, Image, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment"
 
 import MultiImage from "./MultiImage";
 
@@ -42,7 +43,7 @@ export default function Item({
     Linking.openURL(`tel:${phone}`);
   }
   function converTimeShort(time) {
-    return time;
+    return moment(time).fromNow();
   }
 
   function handleEdit(id){

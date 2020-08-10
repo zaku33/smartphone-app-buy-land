@@ -27,6 +27,8 @@ export default function UpdateNews({ route }) {
   const [iPrice, setIPrice] = useState();
   const [iAddress, setIAddress] = useState();
   const [iLocation, setILocation] = useState();
+  const [iLandInfo, setILandInfo] = useState();
+
   useEffect(() => {
     console.log("Gọi n lần");
     getNewsUpdated();
@@ -45,6 +47,7 @@ export default function UpdateNews({ route }) {
       id : route.params.id,
       title: iTitle,
       content: iContent,
+      landInfo: iLandInfo,
       price: iPrice,
       image: list_image,
       address: iAddress,
@@ -91,7 +94,7 @@ export default function UpdateNews({ route }) {
 
 
   return (
-    <View style={{ width: "98%", left: "1%", top: "1%" }}>
+    <ScrollView style={{ width: "98%", left: "1%", top: "1%" }}>
       <Header
         leftContainerStyle={styles.leftCreateNewsBar}
         rightContainerStyle={styles.rightCreateNewsBar}
@@ -128,8 +131,6 @@ export default function UpdateNews({ route }) {
             multiline={true}
             onChangeText={(text) => setITitle(text)}
           />
-        </View>
-        <View>
           <Input
             label="Address"
             defaultValue={iAddress != undefined ? iAddress : "Address"}
@@ -138,9 +139,6 @@ export default function UpdateNews({ route }) {
             multiline={true}
             onChangeText={(text) => setIAddress(text)}
           />
-        </View>
-
-        <View>
           <Input
             label="Content"
             defaultValue={iContent != undefined ? iContent : "Content"}
@@ -148,8 +146,27 @@ export default function UpdateNews({ route }) {
             multiline={true}
             onChangeText={(text) => setIContent(text)}
           />
-        </View>
-
+            <Input
+              label="Square"
+              defaultValue={iLandInfo.square != undefined ? iLandInfo.square : "0"}
+              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              keyboardType={"numeric"}
+              rightIcon={() => {
+                return <Text> m2</Text>;
+              }}
+              onChangeText={(text) => setILandInfo({ [iLandInfo.square] : text })}
+            />
+             <Input
+              label="Floor"
+              defaultValue={iLandInfo.square != undefined ? iLandInfo.floor : "0"}
+              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              keyboardType={"numeric"}
+              rightIcon={() => {
+                return <Text> floor(s)</Text>;
+              }}
+              onChangeText={(text) => thsetILandInfo({ [iLandInfo.floor] : text })}
+            />
+          </View>
         <View>
           <Input
             label="Price"
@@ -182,6 +199,6 @@ export default function UpdateNews({ route }) {
             })}
         </ScrollView>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 }

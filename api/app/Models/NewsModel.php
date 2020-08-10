@@ -27,7 +27,7 @@ class NewsModel extends Model
             'u.avatar',
             'u.nickname',
             'u.phone'
-        )->from('news_posts as np')->leftJoin('users as u', 'u.id', '=', 'np.author')->get()->toArray();
+        )->from('news_posts as np')->leftJoin('users as u', 'u.id', '=', 'np.author')->orderByDesc('np.updated_at')->get()->toArray();
         return $query;
     }
 
@@ -42,6 +42,7 @@ class NewsModel extends Model
         where('title', 'like', $text_input."%")->
         orWhere('price', 'like', $text_input."%")->
         orWhere('content', 'like', $text_input."%")->
+        orderByDesc('np.updated_at')->
         get()->toArray();
         return $query;
     }

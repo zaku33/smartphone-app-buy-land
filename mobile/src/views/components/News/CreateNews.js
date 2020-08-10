@@ -23,6 +23,8 @@ export default class CreateNews extends React.Component {
     title: "",
     content: "",
     address: "",
+    landInfo:{
+    },
     image: [],
     price: 0,
     location: {
@@ -38,7 +40,7 @@ export default class CreateNews extends React.Component {
   }
   handleCreate = async () => {
     let token = await AsyncStorage.getItem("access_token");
-    const { title, content, location, image, price, address } = this.state;
+    const { title, content, location, image, price, address ,landInfo } = this.state;
 
     let list_image = [];
 
@@ -48,6 +50,7 @@ export default class CreateNews extends React.Component {
     let news_data = {
       title: title,
       content: content,
+      landInfo: landInfo,
       price: price,
       image: list_image,
       address: address,
@@ -119,7 +122,7 @@ export default class CreateNews extends React.Component {
     let { image } = this.state;
 
     return (
-      <View style={{ width: "98%", left: "1%", top: "1%" }}>
+      <ScrollView style={{ width: "98%", left: "1%", top: "1%" }}>
         <Header
           leftContainerStyle={styles.leftCreateNewsBar}
           rightContainerStyle={styles.rightCreateNewsBar}
@@ -177,6 +180,28 @@ export default class CreateNews extends React.Component {
               onChangeText={(text) => this.setState({ content: text })}
             />
           </View>
+          <View>
+            <Input
+              label="Square"
+              placeholder="Square"
+              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              keyboardType={"numeric"}
+              rightIcon={() => {
+                return <Text> m2</Text>;
+              }}
+              onChangeText={(text) => this.setState({ [landInfo.square] : text })}
+            />
+             <Input
+              label="Floor"
+              placeholder="Floor"
+              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              keyboardType={"numeric"}
+              rightIcon={() => {
+                return <Text> floor(s)</Text>;
+              }}
+              onChangeText={(text) => this.setState({ [landInfo.floor] : text })}
+            />
+          </View>
 
           <View>
             <Input
@@ -210,16 +235,8 @@ export default class CreateNews extends React.Component {
                 );
               })}
           </ScrollView>
-
-          {/* <MapView
-            style={styles.mapStyle}
-            region={this.state.location}
-            showsUserLocation={true}
-            showsMyLocationButton={true}
-            showsCompass={true}
-          /> */}
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }

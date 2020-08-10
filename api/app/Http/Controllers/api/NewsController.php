@@ -64,6 +64,7 @@ class NewsController extends Controller
             $address = request('address');
             $content = request('content');
             $price = request('price');
+            $land_info = request('landInfo');
             $type_post = priceToPriority($price);
             $image = request('image');
             $location = request('location');
@@ -71,6 +72,7 @@ class NewsController extends Controller
             $news_post = new NewsModel();
             $news_post->author = $author;
             $news_post->title = $title;
+            $news_post->land_info = $land_info;
             $news_post->address = $address;
             $news_post->content = $content;
             $news_post->price = $price;
@@ -93,6 +95,7 @@ class NewsController extends Controller
             $title = request('title');
             $address =request('address');
             $content = request('content');
+            $land_info = request('landInfo');
             $price = (int) request('price');
             $type_post = priceToPriority($price);
             $location = request('location');
@@ -103,6 +106,7 @@ class NewsController extends Controller
             $news_found->title = $title;
             $news_found->address = $address;
             $news_found->content = $content;
+            $news_found->land_info = $land_info;
             $news_found->price = $price;
             $news_found->type_post = $type_post;
             $news_found->location = $location;

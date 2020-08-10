@@ -1,30 +1,20 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-camera-roll-select
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add moment
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\SUGA\bin;C:\Python38\Scripts;C:\Python38;C:\Perl64\site\bin;C:\Perl64\bin;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Windows\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Users\SUGA\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Microsoft\Web Platform Installer;C:\Users\SUGA\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.2\bin;C:\Users\SUGA\AppData\Roaming\npm;D:\composer.phar;C:\Users\SUGA\AppData\Local\Programs\Python\Python37-32;C:\composer;C:\Program Files (x86)\Yarn\bin;C:\Users\SUGA\depot_tools;C:\Program Files (x86)\php\v7.2;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0;%SYSTEMROOT%\System32\OpenSSH;C:\Users\SUGA\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.2\bin;C:\Users\SUGA\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\SUGA\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\SUGA\AppData\Roaming\Composer\vendor\bin;C:\composer;D:\mysql-8.0.17-winx64\bin;C:\Program Files\MongoDB\Server\4.2\bin;C:\Users\SUGA\AppData\Local\Yarn\bin;C:\Users\SUGA\AppData\Roaming\npm
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\nguye\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\nguye\AppData\Roaming\npm;C:\Go\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\PHP;C:\Program Files (x86)\PHP\ext;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\Yarn\bin;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0;%SYSTEMROOT%\System32\OpenSSH;C:\Users\nguye\AppData\Local\Programs\Python\Python37\Scripts;C:\Users\nguye\AppData\Local\Programs\Python\Python37;C:\Program Files\MongoDB\Server\4.0\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2018.3.5\bin;C:\Users\nguye\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\nguye\go\bin;C:\Program Files (x86)\PHP\7.2;C:\Users\nguye\composer.phar;C:\Users\nguye\AppData\Roaming\Composer\vendor\bin;C:\Users\nguye\AppData\Local\Yarn\bin;C:\Users\nguye\AppData\Local\Microsoft\WindowsApps
 
 Yarn version: 
   1.22.4
 
 Node version: 
-  12.18.0
+  10.15.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/expo-camera-roll-select: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1221:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  Error: EPERM: operation not permitted, unlink 'D:\MERN\smartphone-app-buy-land\mobile\node_modules\@babel\compat-data\node_modules\.bin'
 
 npm manifest: 
   {
@@ -44,22 +34,27 @@ npm manifest:
       "@react-navigation/stack": "^5.2.7",
       "axios": "^0.19.2",
       "expo": "~36.0.0",
+      "expo-camera": "~8.0.0",
       "expo-constants": "^9.0.0",
       "expo-image-picker": "~8.0.1",
       "expo-mail-composer": "^8.0.0",
+      "expo-media-library": "~8.0.0",
       "intl": "^1.2.5",
       "react": "~16.9.0",
       "react-dom": "~16.9.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
       "react-native-elements": "^2.0.0",
+      "react-native-flash-message": "^0.1.15",
       "react-native-gesture-handler": "~1.5.0",
       "react-native-image-picker": "^2.3.1",
+      "react-native-image-zoom-viewer": "^3.0.1",
       "react-native-maps": "0.27.1",
       "react-native-paper": "^3.10.1",
       "react-native-reanimated": "~1.4.0",
       "react-native-safe-area-context": "0.6.0",
       "react-native-screens": "2.0.0-alpha.12",
-      "react-native-web": "~0.11.7"
+      "react-native-web": "~0.11.7",
+      "sweetalert2-react-content": "^3.0.3"
     },
     "devDependencies": {
       "@babel/core": "^7.0.0",
@@ -2450,6 +2445,14 @@ Lockfile:
       path-browserify "^1.0.0"
       url-parse "^1.4.4"
   
+  expo-camera@~8.0.0:
+    version "8.0.0"
+    resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-8.0.0.tgz#a0caee7baf1f2013203fe6a4635125ade12ec164"
+    integrity sha512-mtP4NV2R4e+JTXUZBiA0ok4xSzTfRLxirvqJ5T7kjyozuCWUJeOhGk3hqNsBbWhwXDA+hirAge7169UB3vKfDQ==
+    dependencies:
+      lodash "^4.6.0"
+      prop-types "^15.6.0"
+  
   expo-constants@^9.0.0:
     version "9.0.0"
     resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.0.0.tgz#35c600079ee91d38fe4f56375caae6e90f122fdd"
@@ -2511,6 +2514,11 @@ Lockfile:
     integrity sha512-CMkDa5YX9YZj/ZLHp0f1WAMBrCZjGqsloOH9JzhnCwMVy0BR+lLYoYWiwx2zk2JTpUgADXjdQKK4edDFclGwtg==
     dependencies:
       query-string "^6.2.0"
+  
+  expo-media-library@~8.0.0:
+    version "8.0.0"
+    resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-8.0.0.tgz#d763a2f39a81348d357171be5ea486679c2edb86"
+    integrity sha512-7TIcJjmQq+sH3deIVjwyQYa3nVsLZZUj6fQYA3R+DrFNRT6ehmd1Lai0klTa7ma3pflPEC4Uv2zOyf53alvD2w==
   
   expo-permissions@*:
     version "8.1.0"
@@ -4532,6 +4540,14 @@ Lockfile:
       react-native-ratings "^6.5.0"
       react-native-status-bar-height "^2.2.0"
   
+  react-native-flash-message@^0.1.15:
+    version "0.1.15"
+    resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.15.tgz#ebda84c27665756dbae85e06e3205c161cc3eda0"
+    integrity sha512-aibvd+rp2JrLEqdkKSvrlSHArgFbOycpxYdqEfWd+h3G6JixMPdbCgvRcHSBVM9M1ZIieY9x3a3NCRC4yd7hVw==
+    dependencies:
+      prop-types "^15.7.2"
+      react-native-iphone-x-helper "^1.2.1"
+  
   react-native-gesture-handler@~1.5.0:
     version "1.5.6"
     resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.5.6.tgz#5d90145f624e3707db2930f43ab41579683e2375"
@@ -4543,10 +4559,22 @@ Lockfile:
       invariant "^2.2.4"
       prop-types "^15.7.2"
   
+  react-native-image-pan-zoom@^2.1.12:
+    version "2.1.12"
+    resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
+    integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
+  
   react-native-image-picker@^2.3.1:
     version "2.3.1"
     resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.3.1.tgz#1977b65e07793d2c0b2d1976fb675c5f75ad7f11"
     integrity sha512-c/a2h7/T7yBo5KlNQhcSn4xf4+6Li6LfJ59+GZT1ZzzWrj/6X8DiJ/TJBOlOZMC5tJriZKuRkWSsr74k6z+brw==
+  
+  react-native-image-zoom-viewer@^3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-3.0.1.tgz#a2bd5fb3bda15e0686ce88fcde8576726495d7fb"
+    integrity sha512-la6s5DNSuq4GCRLsi5CZ29FPjgTpdCuGIRdO5T9rUrAtxrlpBPhhSnHrbmPVxsdtOUvxHacTh2Gfa9+RraMZQA==
+    dependencies:
+      react-native-image-pan-zoom "^2.1.12"
   
   react-native-iphone-x-helper@^1.2.1:
     version "1.2.1"
@@ -5291,6 +5319,16 @@ Lockfile:
     integrity sha512-oRSIpR8pxT1Wr2FquTNnGet79b3BWljqOuoW/h4oBhxJ/HUbX5nX6JSruTkvXDCFMwDPvsaTTbvMLKZWSy0R5g==
     dependencies:
       has-flag "^4.0.0"
+  
+  sweetalert2-react-content@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/sweetalert2-react-content/-/sweetalert2-react-content-3.0.3.tgz#40d5b5964fa3c62ffb54f0bc4d0c2924d788bb26"
+    integrity sha512-0BAhry219OcUlN4sP8KabSaN5miVihyY9kwOUOeWlP5aH8fQL0cShTPaKS9FvyLAb8UEN4O8vw0jSD0PXQJJtw==
+  
+  sweetalert2@^9.17.1:
+    version "9.17.1"
+    resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.17.1.tgz#3d3c8d2dd8b44aeec6a01bf611be265143586bd1"
+    integrity sha512-D/VE2lT/bKd64/RBglLUtQ+3nsftzjzIiP2iqN6zPzPwf+2djIY+4k8Bg430zxRUn4DkZzyIuU58q3n0J43lvw==
   
   symbol-observable@1.0.1:
     version "1.0.1"
