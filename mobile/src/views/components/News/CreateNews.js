@@ -23,8 +23,8 @@ export default class CreateNews extends React.Component {
     title: "",
     content: "",
     address: "",
-    landInfo:{
-    },
+    floor: 0,
+    square: 0,
     image: [],
     price: 0,
     location: {
@@ -40,7 +40,7 @@ export default class CreateNews extends React.Component {
   }
   handleCreate = async () => {
     let token = await AsyncStorage.getItem("access_token");
-    const { title, content, location, image, price, address ,landInfo } = this.state;
+    const { title, content, location, image, price, address , floor, square } = this.state;
 
     let list_image = [];
 
@@ -50,7 +50,10 @@ export default class CreateNews extends React.Component {
     let news_data = {
       title: title,
       content: content,
-      landInfo: landInfo,
+      land_info: {
+        floor: floor,
+        square: square
+      },
       price: price,
       image: list_image,
       address: address,
@@ -184,22 +187,22 @@ export default class CreateNews extends React.Component {
             <Input
               label="Square"
               placeholder="Square"
-              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              leftIcon={{ type: "font-awesome", name: "square-o" }}
               keyboardType={"numeric"}
               rightIcon={() => {
                 return <Text> m2</Text>;
               }}
-              onChangeText={(text) => this.setState({ [landInfo.square] : text })}
+              onChangeText={(text) => this.setState({ square : text })}
             />
              <Input
               label="Floor"
               placeholder="Floor"
-              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
+              leftIcon={{ type: "font-awesome", name: "building" }}
               keyboardType={"numeric"}
               rightIcon={() => {
                 return <Text> floor(s)</Text>;
               }}
-              onChangeText={(text) => this.setState({ [landInfo.floor] : text })}
+              onChangeText={(text) => this.setState({ floor : text })}
             />
           </View>
 

@@ -1,13 +1,15 @@
 import React from "react";
-import { View, Text, Linking } from "react-native";
+import { View, Text, Linking, Dimensions } from "react-native";
 import { ListItem, Divider, Avatar, Image, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import moment from "moment"
+import moment from "moment";
 
 import MultiImage from "./MultiImage";
 
 import styles from "./css/itemStyles";
 import { formatNumber, convertToMoney } from "../../helper/convertMoney";
+
+const { width, height } = Dimensions.get("window");
 export default function Item({
   id,
   avatar,
@@ -46,10 +48,9 @@ export default function Item({
     return moment(time).fromNow();
   }
 
-  function handleEdit(id){
+  function handleEdit(id) {
     navigation.navigate("UpdateNews", { id: id });
   }
-
 
   return (
     <View>
@@ -60,12 +61,16 @@ export default function Item({
               <Avatar
                 size="small"
                 rounded
-                // showAccessory
-                source={{ uri: avatar ? avatar : 'https://imgur.com/a/10rme5G?fbclid=IwAR0zFiZpbCFOy0yus7_QrySs8fbkBfH6tRhjwKWBL7Ay9LXnh3HdxQx9wp4' }}
-                // onPress={() => console.log(id)}
-                // onAccessoryPress={() => console.log("Edit ")}
+                source={{
+                  uri: avatar
+                    ? avatar
+                    : "https://imgur.com/a/10rme5G?fbclid=IwAR0zFiZpbCFOy0yus7_QrySs8fbkBfH6tRhjwKWBL7Ay9LXnh3HdxQx9wp4",
+                }}
                 icon={{ name: "user", type: "font-awesome" }} // use this to setup hidden backgroud avatar to icon
                 title={author} // use this to setup hidden backgroud avatar to name of author
+                // showAccessory
+                // onPress={() => console.log(id)}
+                // onAccessoryPress={() => console.log("Edit ")}
               />
               <Text style={styles.author}>{author}</Text>
               <Text style={styles.updated_at}>
@@ -88,38 +93,36 @@ export default function Item({
               </View>
 
               <Text>
-                Title : <Text style={styles.title}> {title} </Text>
+                Tiêu đề : <Text style={styles.title}> {title} </Text>
               </Text>
-              <View>
-                <Text>
-                  Content : <Text style={styles.content}> {content} </Text>
+
+              <Text>
+                Nội dung : <Text style={styles.content}> {content} </Text>
+              </Text>
+              <MultiImage listImg={img} />
+
+              <Divider />
+              <View style={{ flex: 1, flexDirection: "column" ,justifyContent: 'space-between' }}>
+                <Text style={styles.price}>
+                  Giá : {convertToMoney(price, 2)} VNĐ
                 </Text>
-                <MultiImage listImg={img} />
+                <Text
+                  style={styles.address}
+                  onPress={() => {
+                    handleAddressClick(location);
+                  }}
+                >
+                  Địa chỉ : {address != null ? address : ""}
+                </Text>
+                <Text
+                  style={styles.phone}
+                  onPress={() => {
+                    handlePhoneClick(phone);
+                  }}
+                >
+                  Điện thoại : {phone}
+                </Text>
               </View>
-
-              <Divider />
-              <Text style={styles.price}>
-                Price : {formatNumber(price)} VNĐ
-              </Text>
-              <Divider />
-
-              <Text
-                style={styles.address}
-                onPress={() => {
-                  handleAddressClick(location);
-                }}
-              >
-                Address : {address != null ? address : ""}
-              </Text>
-              <Divider />
-              <Text
-                style={styles.phone}
-                onPress={() => {
-                  handlePhoneClick(phone);
-                }}
-              >
-                Phone : {phone}
-              </Text>
             </View>
           );
         }}

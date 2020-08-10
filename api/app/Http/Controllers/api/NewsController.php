@@ -64,10 +64,11 @@ class NewsController extends Controller
             $address = request('address');
             $content = request('content');
             $price = request('price');
-            $land_info = request('landInfo');
+            $land_info = request('land_info');
             $type_post = priceToPriority($price);
             $image = request('image');
             $location = request('location');
+
 
             $news_post = new NewsModel();
             $news_post->author = $author;
@@ -95,12 +96,14 @@ class NewsController extends Controller
             $title = request('title');
             $address =request('address');
             $content = request('content');
-            $land_info = request('landInfo');
+            $land_info = request('land_info');
             $price = (int) request('price');
             $type_post = priceToPriority($price);
             $location = request('location');
             $user_auth_id = Auth::user()->id;
             $news_found = NewsModel::find($news_id);
+
+
             if (!$news_found) return resMes("Cannot find this news", 404);
             if ($news_found['author'] != $user_auth_id) return resMes(__('api.news.getById_403'), 403);
             $news_found->title = $title;

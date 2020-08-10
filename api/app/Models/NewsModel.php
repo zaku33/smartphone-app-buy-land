@@ -13,6 +13,7 @@ class NewsModel extends Model
         'type_post' => 'json',
         'image' => 'array',
         'location' => 'json',
+        'land_info' => 'json'
 
     ];
     protected $fillable =[

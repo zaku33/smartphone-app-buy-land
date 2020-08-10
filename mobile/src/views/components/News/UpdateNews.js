@@ -21,19 +21,19 @@ import MapView from "react-native-maps";
 
 export default function UpdateNews({ route }) {
   const navigation = useNavigation();
-  const [iTitle, setITitle] = useState();
-  const [iContent, setIContent] = useState();
-  const [iImage, setIImage] = useState();
-  const [iPrice, setIPrice] = useState();
-  const [iAddress, setIAddress] = useState();
-  const [iLocation, setILocation] = useState();
-  const [iLandInfo, setILandInfo] = useState();
+  const [iTitle, setITitle] = useState("");
+  const [iContent, setIContent] = useState("");
+  const [iImage, setIImage] = useState([]);
+  const [iPrice, setIPrice] = useState(0);
+  const [iAddress, setIAddress] = useState("");
+  const [iLocation, setILocation] = useState({});
+  const [iSquare, setISquare] = useState(0);
+  const [iFloor, setIFloor] = useState(0);
 
   useEffect(() => {
-    console.log("Gọi n lần");
     getNewsUpdated();
     getPermissionAsync();
-  },[]);
+  }, []);
   function handleBack() {
     navigation.navigate("News");
   }
@@ -44,10 +44,13 @@ export default function UpdateNews({ route }) {
       list_image.push(img);
     });
     let news_data = {
-      id : route.params.id,
+      id: route.params.id,
       title: iTitle,
       content: iContent,
-      landInfo: iLandInfo,
+      land_info: {
+        square: iSquare,
+        floor: iFloor
+      },
       price: iPrice,
       image: list_image,
       address: iAddress,
@@ -74,11 +77,13 @@ export default function UpdateNews({ route }) {
         newsId: route.params.id,
       },
     });
-    const { title, content, image, price, address, location } = res.data.data;
+    const { title, content, land_info, image, price, address, location } = res.data.data;
     setITitle(title);
     setIContent(content);
     setIImage(image);
     setIPrice(price);
+    setIFloor(land_info.floor);
+    setISquare(land_info.square);
     setIAddress(address);
     setILocation(location);
     return;
@@ -91,7 +96,6 @@ export default function UpdateNews({ route }) {
       }
     }
   }
-
 
   return (
     <ScrollView style={{ width: "98%", left: "1%", top: "1%" }}>
@@ -146,28 +150,26 @@ export default function UpdateNews({ route }) {
             multiline={true}
             onChangeText={(text) => setIContent(text)}
           />
-            <Input
-              label="Square"
-              defaultValue={iLandInfo.square != undefined ? iLandInfo.square : "0"}
-              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
-              keyboardType={"numeric"}
-              rightIcon={() => {
-                return <Text> m2</Text>;
-              }}
-              onChangeText={(text) => setILandInfo({ [iLandInfo.square] : text })}
-            />
-             <Input
-              label="Floor"
-              defaultValue={iLandInfo.square != undefined ? iLandInfo.floor : "0"}
-              leftIcon={{ type: "font-awesome", name: "file-word-o" }}
-              keyboardType={"numeric"}
-              rightIcon={() => {
-                return <Text> floor(s)</Text>;
-              }}
-              onChangeText={(text) => thsetILandInfo({ [iLandInfo.floor] : text })}
-            />
-          </View>
-        <View>
+          <Input
+            label="Square"
+            defaultValue={iSquare.toString()}
+            leftIcon={{ type: "font-awesome", name: "square-o" }}
+            keyboardType={"numeric"}
+            rightIcon={() => {
+              return <Text> m2</Text>;
+            }}
+            onChangeText={(text) => setISquare(text)}
+          />
+          <Input
+            label="Floor"
+            defaultValue={iFloor.toString()}
+            leftIcon={{ type: "font-awesome", name: "building" }}
+            keyboardType={"numeric"}
+            rightIcon={() => {
+              return <Text> floor(s)</Text>;
+            }}
+            onChangeText={(text) => setIFloor(text)}
+          />
           <Input
             label="Price"
             defaultValue={iPrice != undefined ? iPrice.toString() : "0"}

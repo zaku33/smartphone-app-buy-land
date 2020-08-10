@@ -45,11 +45,17 @@ export default StyleSheet.create({
   content: {
     fontSize: 16,
   },
+  price:{
+    textAlign: "left",
+    fontSize:20
+  },
   address: {
     textAlign: "left",
+    fontSize:20
   },
   phone: {
     textAlign: "left",
+    fontSize:20
   },
   endList: { backgroundColor: "gray", height: 10 },
 });

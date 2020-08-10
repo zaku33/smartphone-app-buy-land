@@ -5,15 +5,15 @@ function convertToMoney(num, digits) {
         },
         {
             value: 1e3,
-            symbol: "K"
+            symbol: " NGHÌN"
         },
         {
             value: 1e6,
-            symbol: "M"
+            symbol: " TRIỆU"
         },
         {
             value: 1e9,
-            symbol: "B"
+            symbol: " TỶ"
         }
     ];
     var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
