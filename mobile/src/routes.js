@@ -11,6 +11,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import MainScreen from "./pages/MainScreen";
 import CreateNews from "./views/components/News/CreateNews";
 import UpdateNews from "./views/components/News/UpdateNews";
+import DetailNews from "./views/components/News/DetailNews";
+
 
 export default function Routes() {
   return (
@@ -22,6 +24,8 @@ export default function Routes() {
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen name="CreateNews" component={CreateNews} />
         <Stack.Screen name="UpdateNews" component={UpdateNews} />
+        <Stack.Screen name="DetailNews" component={DetailNews} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

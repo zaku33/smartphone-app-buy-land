@@ -16,7 +16,6 @@ import * as Permissions from "expo-permissions";
 
 import api from "../../../services/api";
 import styles from "../../css/styles";
-import MapView, { Marker } from "react-native-maps";
 
 export default class CreateNews extends React.Component {
   state = {

@@ -53,5 +53,9 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   
 });

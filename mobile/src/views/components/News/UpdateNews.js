@@ -17,7 +17,6 @@ import * as Permissions from "expo-permissions";
 import api from "../../../services/api";
 import styles from "../../css/styles";
 import { useNavigation } from "@react-navigation/native";
-import MapView from "react-native-maps";
 
 export default function UpdateNews({ route }) {
   const navigation = useNavigation();
@@ -103,7 +102,7 @@ export default function UpdateNews({ route }) {
         leftContainerStyle={styles.leftCreateNewsBar}
         rightContainerStyle={styles.rightCreateNewsBar}
         centerComponent={
-          <Text style={styles.centerFormCreateNews}>New Post</Text>
+          <Text style={styles.centerFormCreateNews}>Update News</Text>
         }
         leftComponent={
           <Icon

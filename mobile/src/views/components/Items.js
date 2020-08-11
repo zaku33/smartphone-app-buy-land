@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, Linking, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Linking,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import { ListItem, Divider, Avatar, Image, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
@@ -28,17 +34,12 @@ export default function Item({
   const navigation = useNavigation();
 
   function handleAddressClick(location) {
-    let _lat = location.latitude;
-    let _long = location.longitude;
-    let _latDel = location.latitudeDelta;
-    let _lonDel = location.longitudeDelta;
-    let _address = location.name;
-
     navigation.navigate("GoogleMap", {
-      _latitude: _lat,
-      _longitude: _long,
-      _latitudeDelta: _latDel,
-      _longitudeDelta: _lonDel,
+      _latitude: location.latitude,
+      _longitude: location.longitude,
+      _latitudeDelta: location.latitudeDelta,
+      _longitudeDelta: location.longitudeDelta,
+      _address: address,
     });
   }
   function handlePhoneClick(phone) {
@@ -49,7 +50,12 @@ export default function Item({
   }
 
   function handleEdit(id) {
+    console.log("Vào edit trước");
     navigation.navigate("UpdateNews", { id: id });
+  }
+  function handleDetail(id) {
+    console.log("Vào detail trước");
+    navigation.navigate("DetailNews", { id: id , avatar: avatar});
   }
 
   return (
@@ -72,6 +78,7 @@ export default function Item({
                 // onPress={() => console.log(id)}
                 // onAccessoryPress={() => console.log("Edit ")}
               />
+
               <Text style={styles.author}>{author}</Text>
               <Text style={styles.updated_at}>
                 {converTimeShort(updated_at)}
@@ -85,10 +92,13 @@ export default function Item({
                     onPress={() => handleEdit(id)}
                   ></Icon>
                 ) : null}
+
                 <Icon
+                  style={{ paddingLeft: 10 }}
                   name={priority_icon}
                   type="font-awesome"
                   color="#f50"
+                  onPress={() => handleDetail(id)}
                 ></Icon>
               </View>
 
@@ -99,10 +109,17 @@ export default function Item({
               <Text>
                 Nội dung : <Text style={styles.content}> {content} </Text>
               </Text>
+
               <MultiImage listImg={img} />
 
               <Divider />
-              <View style={{ flex: 1, flexDirection: "column" ,justifyContent: 'space-between' }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Text style={styles.price}>
                   Giá : {convertToMoney(price, 2)} VNĐ
                 </Text>

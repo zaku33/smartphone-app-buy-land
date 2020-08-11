@@ -17,13 +17,13 @@ class NewsPost extends Migration
         Schema::create('news_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('author')->nullable(false);
-            $table->string('title', 60);
+            $table->string('title', 150);
             $table->longText('content');
             $table->bigInteger('price');
             $table->json('land_info')->nullable();
             $table->json('type_post')->nullable();
             $table->json('image')->nullable();
-            $table->string('address', 60);
+            $table->string('address', 150);
             $table->json('location')->nullable();
             $table->timestamps();
         });
