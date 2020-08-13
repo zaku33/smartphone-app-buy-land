@@ -24,14 +24,21 @@ Route::post('forgotPass','api\UserController@forgotPass');
 
 
 Route::group(['middleware' => 'auth:api'], function() {
+    // USER
     Route::get('details', 'api\UserController@details');
     Route::put('updateUser', 'api\UserController@updateUser');
+
+    // NEWS
     Route::get('getNews','api\NewsController@getAllNews');
     Route::get('searchNews', 'api\NewsController@getNewsByQuery');
     Route::get('getNewsByPrice', 'api\NewsController@getNewsByPrice');
-    Route::post('likeThisNews', 'api\NewsController@likeThisNews');
-    Route::get('getLikedNewsLocation', 'api\NewsController@getLikedNewsLocation');
-    Route::post('createNews' , 'api\NewsController@createNews');
     Route::get('getNewsById' , 'api\NewsController@getNewsById');
+    Route::get('getLikedNewsLocation', 'api\NewsController@getLikedNewsLocation');
+
+    Route::post('likeThisNews', 'api\NewsController@likeThisNews');
+    Route::post('createNews' , 'api\NewsController@createNews');
+
     Route::put('updateNews' , 'api\NewsController@updateNews');
+
+    Route::post('deleteNews', 'api\NewsController@deleteNews');
 });

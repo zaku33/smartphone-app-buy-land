@@ -88,7 +88,16 @@ export default class CreateNews extends React.Component {
     return Alert.alert(
       null,
       res.data.message,
-      [{ text: "OK", onPress: () => this.props.navigation.navigate("News") }],
+
+      [
+        {
+          text: "OK",
+          onPress: () =>
+            this.props.navigation.navigate("News", {
+              onGoBack: () => this.refresh(),
+            }),
+        },
+      ],
       { cancelable: false }
     );
   };

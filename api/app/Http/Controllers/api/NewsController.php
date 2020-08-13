@@ -136,10 +136,15 @@ class NewsController extends Controller
     }
 
     public function deleteNews(){
-        $id = request('news_id');
-        $found_news = NewsModel::findOrFail($id);
+        $user_auth_id = Auth::user()->id;
+        $news_id = request('news_id');
+        $found_news = NewsModel::findOrFail($news_id);
+        if($found_news['author'] !== $user_auth_id) {
+            return resMes("Unauthorized", 401);
+        }
         $found_news->delete();
         return resMes("Delete news success");
+
     }
 
     public function likeThisNews()
@@ -166,6 +171,6 @@ class NewsController extends Controller
         $user_auth_id = Auth::user()->id;
         $get_all_news_id = InteractModel::all_news_user_like($user_auth_id);
         $news_found = NewsModel::select('title','location','id')->whereIn('id',$get_all_news_id)->get()->toArray();
-        return resMes("",200);
+        return resMes("",200,$news_found);
     }
 }

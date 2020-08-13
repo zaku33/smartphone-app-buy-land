@@ -67,7 +67,17 @@ export default function UpdateNews({ route }) {
     return Alert.alert(
       null,
       res.data.message,
-      [{ text: "OK", onPress: () => navigation.goBack() }],
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'News' }],
+            })
+          },
+        },
+      ],
       { cancelable: false }
     );
   }
@@ -111,8 +121,8 @@ export default function UpdateNews({ route }) {
     setShowMapToSelect(true);
   }
   function saveLocation() {
-      setILocation(tempLocation);
-      setShowMapToSelect(false);
+    setILocation(tempLocation);
+    setShowMapToSelect(false);
   }
 
   return (

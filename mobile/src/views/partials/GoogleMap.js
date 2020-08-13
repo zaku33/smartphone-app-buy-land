@@ -9,7 +9,7 @@ export default function GoogleMap({ route, navigation }) {
   const [longitude, setLongitude] = useState(0);
   const [latitudeDelta, setLatitudeDelta] = useState(0);
   const [longitudeDelta, setLongitudeDelta] = useState(0);
-  const [markers , setMarkers] = useState([]);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     getAllLikeLocation();
@@ -43,15 +43,20 @@ export default function GoogleMap({ route, navigation }) {
             : 0.001
         );
     });
-   
-  },[]);
-  async function getAllLikeLocation (){
+  }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("tabPress", () => {
+      getAllLikeLocation();
+    });
+    return unsubscribe;
+  }, [navigation]);
+  async function getAllLikeLocation() {
     let token = await AsyncStorage.getItem("access_token");
     let res = await api.get("api/getLikedNewsLocation", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setMarkers(res.data.data);
-  };
+  }
   return (
     <MapView
       style={styles.googleMap}

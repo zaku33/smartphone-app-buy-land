@@ -14,9 +14,9 @@ export default StyleSheet.create({
     marginTop: Constants.statusBarHeight,
   },
   viewStyle: {
-    flex: 1,
-    backgroundColor: "white",
-    marginTop: Platform.OS == "ios" ? 30 : 0,
+    // flex: 1,
+    // backgroundColor: "white",
+    // marginTop: Platform.OS == "ios" ? 30 : 0,
   },
   textStyle: {
     padding: 10,
@@ -61,5 +61,13 @@ export default StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'space-between',
   },
-  
+  bgHeader: {
+    backgroundColor: "#0288D1",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 10,
+    height: 90,
+    shadowOpacity: 0.2,
+    position: "relative",
+  }
 });

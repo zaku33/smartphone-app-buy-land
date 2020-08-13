@@ -33,11 +33,11 @@ export default function SignIn() {
     setIsSended(true);
     setTimeout(() => {
       setIsSended(false);
-      navigation.navigate("SignIn");
+      navigation.goBack();
     }, 1000);
   }
   function handleBack() {
-    navigation.navigate("SignIn");
+    navigation.goBack();
   }
 
   return (

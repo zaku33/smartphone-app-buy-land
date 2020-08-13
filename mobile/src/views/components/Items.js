@@ -5,6 +5,8 @@ import {
   Linking,
   Dimensions,
   TouchableOpacity,
+  AsyncStorage,
+  Alert,
 } from "react-native";
 import { ListItem, Divider, Avatar, Image, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +17,7 @@ import MultiImage from "./MultiImage";
 import styles from "./css/itemStyles";
 import { formatNumber, convertToMoney } from "../../helper/convertMoney";
 import { converTimeShort } from "../../helper/convertTime";
+import api from "../../services/api";
 
 const { width, height } = Dimensions.get("window");
 export default function Item({
@@ -51,7 +54,40 @@ export default function Item({
     navigation.navigate("UpdateNews", { id: id });
   }
   function handleDetail(id) {
-    navigation.navigate("DetailNews", { id: id , avatar: avatar , phone: phone ,author:author });
+    navigation.navigate("DetailNews", {
+      id: id,
+      avatar: avatar,
+      phone: phone,
+      author: author,
+    });
+  }
+  async function handleDelete(id) {
+    let dataReq = {
+      news_id: id,
+    };
+    let token = await AsyncStorage.getItem("access_token");
+    let res = await api.post("/api/deleteNews", dataReq, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return Alert.alert(
+      null,
+      res.data.message,
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'News' }],
+            })
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
   return (
@@ -81,12 +117,20 @@ export default function Item({
               </Text>
               <View style={styles.newType}>
                 {is_editable ? (
-                  <Icon
-                    name="pencil"
-                    type="font-awesome"
-                    color="black"
-                    onPress={() => handleEdit(id)}
-                  ></Icon>
+                  <>
+                    <Icon
+                      name="pencil"
+                      type="font-awesome"
+                      color="black"
+                      onPress={() => handleEdit(id)}
+                    ></Icon>
+                    <Icon
+                      name="trash"
+                      type="font-awesome"
+                      color="black"
+                      onPress={() => handleDelete(id)}
+                    ></Icon>
+                  </>
                 ) : null}
 
                 <Icon
@@ -121,9 +165,9 @@ export default function Item({
                 </Text>
                 <Text
                   style={styles.address}
-                  onPress={() => {
-                    handleAddressClick(location);
-                  }}
+                  // onPress={() => {
+                  //   handleAddressClick(location);
+                  // }}
                 >
                   Địa chỉ : {address != null ? address : ""}
                 </Text>

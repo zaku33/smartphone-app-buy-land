@@ -46,7 +46,14 @@ export default function SignUp() {
       }
       return alert(list_error);
     }
-    alert(res.data.message);
+    return Alert.alert(
+      null,
+      res.data.message,
+      [{ text: "OK", onPress: () => {
+        navigation.goBack();
+      } }],
+      { cancelable: false }
+    );
   }
   function verifyPassword() {
     if (username == "") {
@@ -69,7 +76,7 @@ export default function SignUp() {
     return true;
   }
   function goToSignIn() {
-    navigation.navigate("SignIn");
+    navigation.goBack();
   }
   return (
     <ImageBackground
