@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: 250,
+    height: 250
   },
   container: {
     flex: 1,
@@ -37,8 +37,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   headerCreateNewBar:{
-    display: "flex",
-    flex: -1
+    // display: "flex",
+    // flex:3
   },
   centerFormCreateNews:{
     fontSize: 20,
@@ -47,15 +47,19 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   searchBar: {
-    width: "80%",
-    flex: -1,
-    top: "-25%",
+    width: "100%",
+    // flex: -1,
+    // top: "-25%",
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center"
   },
   fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    top:0,
+    right:0,
+    position:"absolute"
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
   },
   
 });

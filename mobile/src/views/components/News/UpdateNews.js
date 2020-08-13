@@ -17,6 +17,7 @@ import * as Permissions from "expo-permissions";
 import api from "../../../services/api";
 import styles from "../../css/styles";
 import { useNavigation } from "@react-navigation/native";
+import MapView, { Marker } from "react-native-maps";
 
 export default function UpdateNews({ route }) {
   const navigation = useNavigation();
@@ -28,6 +29,8 @@ export default function UpdateNews({ route }) {
   const [iLocation, setILocation] = useState({});
   const [iSquare, setISquare] = useState(0);
   const [iFloor, setIFloor] = useState(0);
+  var [tempLocation, setTempLocation] = useState({});
+  var [showMapToSelect, setShowMapToSelect] = useState(false);
 
   useEffect(() => {
     getNewsUpdated();
@@ -48,7 +51,7 @@ export default function UpdateNews({ route }) {
       content: iContent,
       land_info: {
         square: iSquare,
-        floor: iFloor
+        floor: iFloor,
       },
       price: iPrice,
       image: list_image,
@@ -76,7 +79,15 @@ export default function UpdateNews({ route }) {
         newsId: route.params.id,
       },
     });
-    const { title, content, land_info, image, price, address, location } = res.data.data;
+    const {
+      title,
+      content,
+      land_info,
+      image,
+      price,
+      address,
+      location,
+    } = res.data.data;
     setITitle(title);
     setIContent(content);
     setIImage(image);
@@ -94,6 +105,14 @@ export default function UpdateNews({ route }) {
         alert("Sorry, we need camera roll permissions to make this work!");
       }
     }
+  }
+
+  function handleOpenMap() {
+    setShowMapToSelect(true);
+  }
+  function saveLocation() {
+      setILocation(tempLocation);
+      setShowMapToSelect(false);
   }
 
   return (
@@ -141,7 +160,33 @@ export default function UpdateNews({ route }) {
             maxLength={255}
             multiline={true}
             onChangeText={(text) => setIAddress(text)}
+            rightIcon={() => {
+              return (
+                <Button
+                  onPress={() => {
+                    handleOpenMap();
+                  }}
+                  title="Chọn vị trí"
+                />
+              );
+            }}
           />
+          {showMapToSelect && (
+            <View>
+              <Button title="Lưu" onPress={() => saveLocation()}></Button>
+              <MapView style={styles.mapStyle} region={iLocation}>
+                <Marker
+                  draggable
+                  onDragEnd={(e) => setTempLocation(e.nativeEvent.coordinate)}
+                  coordinate={{
+                    latitude: iLocation.latitude,
+                    longitude: iLocation.longitude,
+                  }}
+                  title={iAddress ? iAddress : "Please choose location"}
+                ></Marker>
+              </MapView>
+            </View>
+          )}
           <Input
             label="Content"
             defaultValue={iContent != undefined ? iContent : "Content"}

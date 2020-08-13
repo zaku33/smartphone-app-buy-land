@@ -28,6 +28,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::put('updateUser', 'api\UserController@updateUser');
     Route::get('getNews','api\NewsController@getAllNews');
     Route::get('searchNews', 'api\NewsController@getNewsByQuery');
+    Route::get('getNewsByPrice', 'api\NewsController@getNewsByPrice');
+    Route::post('likeThisNews', 'api\NewsController@likeThisNews');
+    Route::get('getLikedNewsLocation', 'api\NewsController@getLikedNewsLocation');
     Route::post('createNews' , 'api\NewsController@createNews');
     Route::get('getNewsById' , 'api\NewsController@getNewsById');
     Route::put('updateNews' , 'api\NewsController@updateNews');

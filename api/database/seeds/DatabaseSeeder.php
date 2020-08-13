@@ -63,9 +63,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Home',
                 'location' => json_encode((object)[
                     'latitude' => 0,
-                    'longitude' => 0,
-                    'latitudeDelta' => 0.001,
-                    'longitudeDelta' => 0.001
+                    'longitude' => 0
                 ]),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

@@ -5,6 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   AsyncStorage,
+  TextInput,
 } from "react-native";
 import { SearchBar, Header, Button, Icon } from "react-native-elements";
 
@@ -92,12 +93,21 @@ export default class News extends React.Component {
     return (
       <View style={styles.viewStyle}>
         <Header
+          statusBarProps={{ barStyle: 'light-content' }}
+          barStyle="light-content"
+          containerStyle={{
+            display: "flex",
+            // flex: 1,
+            height:50,
+            justifyContent: 'space-around',
+          }}
           containerStyle={styles.headerCreateNewBar}
           leftContainerStyle={styles.leftCreateNewsBar}
           rightContainerStyle={styles.rightCreateNewsBar}
           centerComponent={
             <SearchBar
               round
+              lightTheme
               containerStyle={styles.searchBar}
               searchIcon={{ size: 24 }}
               onChangeText={(text) => this.searchFilterFunction(text)}
@@ -106,14 +116,14 @@ export default class News extends React.Component {
               value={this.state.search}
             />
           }
-          // leftComponent={
-          //   <View>
-          //     <Button
-          //       icon={<Icon name="list" type="font-awesome" color="white" />}
-          //       onPress={() => console.log("Hello")}
-          //     />
-          //   </View>
-          // }
+          leftComponent={
+            <View>
+              <Button
+                icon={<Icon name="list" type="font-awesome" color="white" />}
+                onPress={() => console.log("Hello")}
+              />
+            </View>
+          }
           rightComponent={
             <View>
               <Button

@@ -47,4 +47,17 @@ class NewsModel extends Model
         get()->toArray();
         return $query;
     }
+
+    public static function find_news_by_price($price_from , $price_to){
+        $query = self::select(
+            'np.*',
+            'u.avatar',
+            'u.nickname',
+            'u.phone'
+        )->from('news_posts as np')->leftJoin('users as u', 'u.id', '=', 'np.author')->
+        whereBetween ('price', [$price_from , $price_to])->
+        orderByDesc('np.updated_at')->
+        get()->toArray();
+        return $query;
+    }
 }

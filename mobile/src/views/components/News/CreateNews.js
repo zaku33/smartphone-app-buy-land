@@ -1,14 +1,15 @@
 import * as React from "react";
 import {
-  Button,
   Image,
   View,
   Text,
   ScrollView,
   AsyncStorage,
   Alert,
+  TextInput,
 } from "react-native";
-import { Input, Icon, Header } from "react-native-elements";
+import { Input, Icon, Header, Button } from "react-native-elements";
+import MapView, { Marker, Callout } from "react-native-maps";
 
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
@@ -32,6 +33,8 @@ export default class CreateNews extends React.Component {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
+    tempLocation: {},
+    showMapToSelect: false,
   };
   componentDidMount() {
     this.getCurrentPosition();
@@ -39,7 +42,16 @@ export default class CreateNews extends React.Component {
   }
   handleCreate = async () => {
     let token = await AsyncStorage.getItem("access_token");
-    const { title, content, location, image, price, address , floor, square } = this.state;
+    const {
+      title,
+      content,
+      location,
+      image,
+      price,
+      address,
+      floor,
+      square,
+    } = this.state;
 
     let list_image = [];
 
@@ -51,7 +63,7 @@ export default class CreateNews extends React.Component {
       content: content,
       land_info: {
         floor: floor,
-        square: square
+        square: square,
       },
       price: price,
       image: list_image,
@@ -68,7 +80,7 @@ export default class CreateNews extends React.Component {
       return Alert.alert(
         null,
         res.data.message,
-        [{ text: "OK", onPress: () => {}}],
+        [{ text: "OK", onPress: () => {} }],
         { cancelable: false }
       );
     }
@@ -87,6 +99,11 @@ export default class CreateNews extends React.Component {
   handleBack = () => {
     this.props.navigation.navigate("News");
   };
+
+  handleOpenMap = () => {
+    this.setState({ showMapToSelect: true });
+  };
+
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -101,8 +118,6 @@ export default class CreateNews extends React.Component {
         location: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
         },
       });
     });
@@ -120,6 +135,12 @@ export default class CreateNews extends React.Component {
       });
     }
   };
+
+  saveLocation = () => {
+    this.setState({ location: this.state.tempLocation });
+    this.setState({ showMapToSelect: false });
+  };
+
   render() {
     let { image } = this.state;
 
@@ -169,10 +190,41 @@ export default class CreateNews extends React.Component {
               leftIcon={{ type: "font-awesome", name: "map-marker" }}
               maxLength={255}
               multiline={true}
+              rightIcon={() => {
+                return (
+                  <Button
+                    onPress={() => {
+                      this.handleOpenMap();
+                    }}
+                    title="Chọn vị trí"
+                  />
+                );
+              }}
               onChangeText={(text) => this.setState({ address: text })}
             />
           </View>
-
+          {this.state.showMapToSelect && (
+            <View>
+              <Button title="Lưu" onPress={() => this.saveLocation()}></Button>
+              <MapView style={styles.mapStyle} region={this.state.location}>
+                <Marker
+                  draggable
+                  onDragEnd={(e) =>
+                    this.setState({ tempLocation: e.nativeEvent.coordinate })
+                  }
+                  coordinate={{
+                    latitude: this.state.location.latitude,
+                    longitude: this.state.location.longitude,
+                  }}
+                  title={
+                    this.state.address
+                      ? this.state.address
+                      : "Please choose location"
+                  }
+                ></Marker>
+              </MapView>
+            </View>
+          )}
           <View>
             <Input
               label="Content"
@@ -191,9 +243,9 @@ export default class CreateNews extends React.Component {
               rightIcon={() => {
                 return <Text> m2</Text>;
               }}
-              onChangeText={(text) => this.setState({ square : text })}
+              onChangeText={(text) => this.setState({ square: text })}
             />
-             <Input
+            <Input
               label="Floor"
               placeholder="Floor"
               leftIcon={{ type: "font-awesome", name: "building" }}
@@ -201,7 +253,7 @@ export default class CreateNews extends React.Component {
               rightIcon={() => {
                 return <Text> floor(s)</Text>;
               }}
-              onChangeText={(text) => this.setState({ floor : text })}
+              onChangeText={(text) => this.setState({ floor: text })}
             />
           </View>
 

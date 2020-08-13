@@ -14,6 +14,7 @@ import MultiImage from "./MultiImage";
 
 import styles from "./css/itemStyles";
 import { formatNumber, convertToMoney } from "../../helper/convertMoney";
+import { converTimeShort } from "../../helper/convertTime";
 
 const { width, height } = Dimensions.get("window");
 export default function Item({
@@ -34,28 +35,23 @@ export default function Item({
   const navigation = useNavigation();
 
   function handleAddressClick(location) {
-    navigation.navigate("GoogleMap", {
-      _latitude: location.latitude,
-      _longitude: location.longitude,
-      _latitudeDelta: location.latitudeDelta,
-      _longitudeDelta: location.longitudeDelta,
-      _address: address,
-    });
+    // navigation.navigate("GoogleMap", {
+    //   _latitude: location.latitude,
+    //   _longitude: location.longitude,
+    //   _latitudeDelta: location.latitudeDelta,
+    //   _longitudeDelta: location.longitudeDelta,
+    //   _address: address,
+    // });
   }
   function handlePhoneClick(phone) {
     Linking.openURL(`tel:${phone}`);
   }
-  function converTimeShort(time) {
-    return moment(time).fromNow();
-  }
 
   function handleEdit(id) {
-    console.log("Vào edit trước");
     navigation.navigate("UpdateNews", { id: id });
   }
   function handleDetail(id) {
-    console.log("Vào detail trước");
-    navigation.navigate("DetailNews", { id: id , avatar: avatar});
+    navigation.navigate("DetailNews", { id: id , avatar: avatar , phone: phone ,author:author });
   }
 
   return (

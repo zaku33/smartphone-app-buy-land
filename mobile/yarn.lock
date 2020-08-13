@@ -3860,6 +3860,11 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.27.0:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+
 morgan@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.10.0.tgz#091778abc1fc47cd3509824653dae1faab6b17d7"
@@ -5255,11 +5260,6 @@ sweetalert2-react-content@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/sweetalert2-react-content/-/sweetalert2-react-content-3.0.3.tgz#40d5b5964fa3c62ffb54f0bc4d0c2924d788bb26"
   integrity sha512-0BAhry219OcUlN4sP8KabSaN5miVihyY9kwOUOeWlP5aH8fQL0cShTPaKS9FvyLAb8UEN4O8vw0jSD0PXQJJtw==
-
-sweetalert2@^9.17.1:
-  version "9.17.1"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.17.1.tgz#3d3c8d2dd8b44aeec6a01bf611be265143586bd1"
-  integrity sha512-D/VE2lT/bKd64/RBglLUtQ+3nsftzjzIiP2iqN6zPzPwf+2djIY+4k8Bg430zxRUn4DkZzyIuU58q3n0J43lvw==
 
 symbol-observable@1.0.1:
   version "1.0.1"

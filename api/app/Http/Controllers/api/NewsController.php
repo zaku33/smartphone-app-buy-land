@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\InteractModel;
 use App\Models\NewsModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,22 @@ class NewsController extends Controller
 
         $text_input = request()->query('textInput');
         $news_found = NewsModel::find_news($text_input);
+        $user_id =  Auth::user()->id;
+        foreach ($news_found as &$news) {
+            if ($news['author'] == $user_id) {
+                $news['is_editable'] = true;
+            } else {
+                $news['is_editable'] = false;
+            }
+        }
+        return resMes("", 200, $news_found);
+    }
+
+    public function getNewsByPrice()
+    {
+        $price_from = request()->query('price_from');
+        $price_to = request()->query('price_to');
+        $news_found = NewsModel::find_news_by_price($price_from,$price_to);
         $user_id =  Auth::user()->id;
         foreach ($news_found as &$news) {
             if ($news['author'] == $user_id) {
@@ -91,7 +108,6 @@ class NewsController extends Controller
     public function updateNews()
     {
         try {
-
             $news_id = request('id');
             $title = request('title');
             $address =request('address');
@@ -102,7 +118,6 @@ class NewsController extends Controller
             $location = request('location');
             $user_auth_id = Auth::user()->id;
             $news_found = NewsModel::find($news_id);
-
 
             if (!$news_found) return resMes("Cannot find this news", 404);
             if ($news_found['author'] != $user_auth_id) return resMes(__('api.news.getById_403'), 403);
@@ -118,5 +133,39 @@ class NewsController extends Controller
         } catch (\Throwable $th) {
             return resMes($th->getMessage(), 500);
         }
+    }
+
+    public function deleteNews(){
+        $id = request('news_id');
+        $found_news = NewsModel::findOrFail($id);
+        $found_news->delete();
+        return resMes("Delete news success");
+    }
+
+    public function likeThisNews()
+    {
+        $user_auth_id = Auth::user()->id;
+        $news_id = request('news_id');
+        $check_exist = InteractModel::check_if_exist_yet($user_auth_id,$news_id);
+        if($check_exist){
+            $check_toggle = InteractModel::toggle_status_if_exist($user_auth_id,$news_id);
+            return $check_toggle ? resMes("Liked") : resMes("Unliked");
+        }else{
+            $interact = new InteractModel();
+            $interact->author = $user_auth_id;
+            $interact->news_id = $news_id;
+            $interact->type_interact = InteractModel::TYPE_INTERACT_LIKE;
+            $interact->status = InteractModel::STATUS_LIKE;
+            $interact->save();
+            return resMes("First time like this news");
+        }
+    }
+
+    public function getLikedNewsLocation()
+    {
+        $user_auth_id = Auth::user()->id;
+        $get_all_news_id = InteractModel::all_news_user_like($user_auth_id);
+        $news_found = NewsModel::select('title','location','id')->whereIn('id',$get_all_news_id)->get()->toArray();
+        return resMes("",200);
     }
 }
