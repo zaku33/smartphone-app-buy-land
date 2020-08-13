@@ -4,9 +4,15 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+<<<<<<< HEAD
   AsyncStorage,
 } from "react-native";
 import { SearchBar, Header, Button, Icon, Input } from "react-native-elements";
+=======
+  AsyncStorage
+} from "react-native";
+import { SearchBar, Header, Button, Icon ,Input} from "react-native-elements";
+>>>>>>> origin/dev-company
 
 import Item from "../components/Items";
 import api from "../../services/api";
@@ -15,6 +21,7 @@ import styles from "../css/styles";
 export default class News extends React.Component {
   constructor(props) {
     super(props);
+<<<<<<< HEAD
     this.state = {
       isLoading: true,
       search: "",
@@ -22,6 +29,9 @@ export default class News extends React.Component {
       price_from: "",
       price_to: "",
     };
+=======
+    this.state = { isLoading: true, search: "", refreshing: false , fromPrice: "", toPrice: "" } ;
+>>>>>>> origin/dev-company
     this.arrayholder = [];
     this.timeoutTyping = 0;
     this.token = AsyncStorage.getItem("access_token");
@@ -99,6 +109,20 @@ export default class News extends React.Component {
     };
   };
 
+  handleSearchPrice = async()=>{
+    let token = await AsyncStorage.getItem("access_token");
+    let res = await api.get("api/getNewsByPrice", {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
+        price_from : this.state.fromPrice,
+        price_to : this.state.toPrice
+      },
+    });
+    this.setState({
+      dataSource: res.data.data,
+    });
+  }
+
   render() {
     if (this.state.isLoading) {
       //Loading View while data is loading
@@ -143,11 +167,42 @@ export default class News extends React.Component {
           //   </View>
           // }
           centerComponent={
+<<<<<<< HEAD
             <View style={{ width: "70%" }}>
               <Input
                 placeholder="Search here..."
                 label="Search land"
                 onChangeText={(text) => this.searchFilterFunction(text)}
+=======
+            <View>
+              <SearchBar
+                  round
+                  lightTheme
+                  containerStyle={styles.searchBar}
+                  searchIcon={{ size: 24 }}
+                  onChangeText={(text) => this.searchFilterFunction(text)}
+                  onClear={(text) => this.searchFilterFunction("")}
+                  placeholder="Search here..."
+                  value={this.state.search}
+              />
+              <Input
+                  placeholder='giá từ'
+                  onChangeText={(text)=> {this.setState({fromPrice: text})}}
+              />
+              <Input
+                  placeholder='đến'
+                  onChangeText={(text)=> {this.setState({toPrice: text})}}
+              />
+              <Button title="Tìm theo giá" onPress={this.handleSearchPrice()}/>
+            </View>
+
+          }
+          leftComponent={
+            <View>
+              <Button
+                icon={<Icon name="list" type="font-awesome" color="white" />}
+                onPress={() => console.log("Hello")}
+>>>>>>> origin/dev-company
               />
             </View>
           }
