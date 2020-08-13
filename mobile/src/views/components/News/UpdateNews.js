@@ -71,10 +71,7 @@ export default function UpdateNews({ route }) {
         {
           text: "OK",
           onPress: () => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'News' }],
-            })
+            navigation.goBack();
           },
         },
       ],

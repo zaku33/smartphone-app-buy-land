@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  AsyncStorage,
-  Alert,
-} from "react-native";
-import { Input, Icon, Header, Avatar ,Button } from "react-native-elements";
+import { View, Text, ScrollView, AsyncStorage, Alert } from "react-native";
+import { Input, Icon, Header, Avatar, Button } from "react-native-elements";
 
 import api from "../../../services/api";
 import styles from "../../css/styles";
@@ -35,6 +29,12 @@ export default function DetailNews({ route }) {
   useEffect(() => {
     getNewsUpdated();
   }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("tabPress", () => {
+      getNewsUpdated();
+    });
+    return unsubscribe;
+  }, [navigation]);
   function handleBack() {
     navigation.navigate("News");
   }
@@ -55,7 +55,7 @@ export default function DetailNews({ route }) {
       price,
       address,
       location,
-      updated_at
+      updated_at,
     } = res.data.data;
     setIAuthor(author);
     setITitle(title);
@@ -71,10 +71,10 @@ export default function DetailNews({ route }) {
     return;
   }
 
-  async function handleLikeNews(){
-    let dataReq ={
-      news_id :  route.params.id
-    }
+  async function handleLikeNews() {
+    let dataReq = {
+      news_id: route.params.id,
+    };
     let token = await AsyncStorage.getItem("access_token");
     let res = await api.post("/api/likeThisNews", dataReq, {
       headers: {
@@ -82,7 +82,7 @@ export default function DetailNews({ route }) {
         "Content-Type": "application/json",
       },
     });
-    Alert.alert(res.data.message)
+    Alert.alert(res.data.message);
   }
 
   return (
@@ -106,11 +106,7 @@ export default function DetailNews({ route }) {
         <Text style={{ paddingBottom: 5 }}>{iPhone}</Text>
         <View style={styles.fixToText}>
           <View>
-            <Button
-              valu
-              title="Thích"
-              onPress={() => handleLikeNews()}
-            />
+            <Button valu title="Thích" onPress={() => handleLikeNews()} />
           </View>
         </View>
       </View>
@@ -132,7 +128,6 @@ export default function DetailNews({ route }) {
           Nội dung : <Text style={styles.content}> {iContent} </Text>
         </Text>
         <MultiImage listImg={iImage} />
-        
       </View>
     </ScrollView>
   );
