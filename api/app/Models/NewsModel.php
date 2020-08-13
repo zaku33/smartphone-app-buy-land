@@ -55,7 +55,7 @@ class NewsModel extends Model
             'u.nickname',
             'u.phone'
         )->from('news_posts as np')->leftJoin('users as u', 'u.id', '=', 'np.author')->
-        whereBetween ('price', [$price_from , $price_to])->
+        whereBetween('price', [$price_from , $price_to])->
         orderByDesc('np.updated_at')->
         get()->toArray();
         return $query;
