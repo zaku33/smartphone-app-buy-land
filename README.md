@@ -54,7 +54,7 @@
 ### Mobile 
 - Run `yarn` in the `mobile` folder;
 - Update the baseURL at src/services/api.js.
-- Run `expo start` to up the project.
+- Run `expo start` to up the project ( NOTICE : BE SURE THAT YOU HAVE ALREADY INSTALLED EXPO ).
 
 ### Test
 - Run `yarn test:backend` at the backend folder;
